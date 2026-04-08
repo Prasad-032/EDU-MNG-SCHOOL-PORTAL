@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grades — EduManage Student</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#1E40AF !important; --accent-s:#DBEAFE !important; --accent-h:#1D3588 !important; }
+    .bottom-nav { position:fixed;bottom:0;left:0;right:0;height:60px;background:#fff;border-top:1px solid var(--border);display:flex !important;z-index:40; }
+    .bn-item { flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;font-weight:600;color:var(--gray);text-decoration:none;transition:color 0.2s; }
+    .bn-item.active { color:#1E40AF; }
+    .bn-item svg { width:20px;height:20px;display:block; }
+
+    /* Exam selector */
+    .exam-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .exam-tab { padding:8px 18px; border-radius:9999px; border:1.5px solid var(--border); background:#fff; font-size:13px; font-weight:700; color:var(--gray); cursor:pointer; transition:all 0.2s; }
+    .exam-tab.active { background:#1E40AF; color:#fff; border-color:#1E40AF; }
+
+    /* Summary cards */
+    .grade-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+    .gs-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; text-align:center; box-shadow:var(--shadow-sm); }
+    .gs-num   { font-size:28px; font-weight:800; line-height:1; }
+    .gs-label { font-size:12px; color:var(--gray); margin-top:4px; }
+
+    /* Subject grade cards */
+    .subject-grades { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .sg-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; box-shadow:var(--shadow-sm); transition:all 0.2s; }
+    .sg-card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+    .sg-header { padding:14px 18px; display:flex; align-items:center; gap:10px; }
+    .sg-dot    { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .sg-subject{ font-size:15px; font-weight:800; color:var(--dark); flex:1; }
+    .sg-grade  { font-size:22px; font-weight:900; }
+    .sg-body   { padding:0 18px 16px; }
+    .sg-bar    { height:8px; background:var(--surface); border-radius:9999px; overflow:hidden; margin-bottom:10px; }
+    .sg-fill   { height:100%; border-radius:9999px; }
+    .sg-row    { display:flex; justify-content:space-between; font-size:12px; color:var(--gray); margin-bottom:4px; }
+    .sg-row span:last-child { font-weight:700; color:var(--dark); }
+    .sg-teacher{ display:flex; align-items:center; gap:8px; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+    .sg-teacher img { width:24px; height:24px; border-radius:50%; object-fit:cover; }
+    .sg-teacher span { font-size:11px; color:var(--gray); }
+
+    /* Report card download */
+    .report-card-banner { background:linear-gradient(135deg,#1E40AF,#0EA5E9); border-radius:var(--radius-xl); padding:20px 24px; display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+    .rcb-text h3 { font-size:16px; font-weight:800; color:#fff; }
+    .rcb-text p  { font-size:13px; color:rgba(255,255,255,0.78); margin-top:3px; }
+    .rcb-btn { background:#fff; color:#1E40AF; border:none; border-radius:var(--radius-md); padding:10px 20px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; }
+
+    @media(max-width:768px) {
+      .grade-summary { grid-template-columns:1fr 1fr; }
+      .subject-grades { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <a href="dashboard.html" style="display:flex;align-items:center;gap:6px;color:var(--gray);font-size:13px;font-weight:600">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Back
+    </a>
+    <div class="topbar-logo" style="margin-left:8px"><div class="topbar-logo-icon" style="background:#1E40AF">E</div>Grades</div>
+    <span class="topbar-spacer"></span>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Raju Sharma</div><div class="ud-role">Student · Class 10A</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <!-- Report card banner -->
+    <div class="report-card-banner">
+      <div class="rcb-text">
+        <h3>📄 Term 2 Report Card Available</h3>
+        <p>Raju Sharma · Class 10A · April 2026</p>
+      </div>
+      <button class="rcb-btn">⬇ Download PDF</button>
+    </div>
+
+    <!-- Exam selector -->
+    <div class="exam-tabs">
+      <button class="exam-tab active">Term 2 — 2026</button>
+      <button class="exam-tab">Term 1 — 2025</button>
+      <button class="exam-tab">Annual — 2025</button>
+    </div>
+
+    <!-- Summary -->
+    <div class="grade-summary">
+      <div class="gs-card"><div class="gs-num" style="color:#1E40AF">88%</div><div class="gs-label">Overall Average</div></div>
+      <div class="gs-card"><div class="gs-num" style="color:#16A34A">A</div><div class="gs-label">Overall Grade</div></div>
+      <div class="gs-card"><div class="gs-num" style="color:#7C3AED">12</div><div class="gs-label">Class Rank</div></div>
+      <div class="gs-card"><div class="gs-num" style="color:#D97706">3.7</div><div class="gs-label">GPA</div></div>
+    </div>
+
+    <!-- Subject cards -->
+    <div class="subject-grades" id="subjectGrades"></div>
+
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <a href="attendance.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="grades.html" class="bn-item active"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Assignments</a>
+    <a href="library.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Library</a>
+    <a href="fees.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Fees</a>
+  </nav>
+</div>
+<script>
+const grades = [
+  { subject:'Mathematics', score:92, max:100, grade:'A+', color:'#1E40AF', teacher:'Mr. Rajesh Kumar', timg:'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=40&h=40&fit=crop&crop=face', ut1:88, ut2:92, mid:90 },
+  { subject:'Science',     score:88, max:100, grade:'A',  color:'#16A34A', teacher:'Ms. Priya Sharma', timg:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=40&h=40&fit=crop&crop=face', ut1:84, ut2:88, mid:86 },
+  { subject:'English',     score:79, max:100, grade:'B+', color:'#7C3AED', teacher:'Mr. Amit Verma',   timg:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face', ut1:75, ut2:79, mid:77 },
+  { subject:'Social Stud.',score:85, max:100, grade:'A',  color:'#D97706', teacher:'Ms. Sunita Nair',  timg:'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=40&h=40&fit=crop&crop=face', ut1:82, ut2:85, mid:83 },
+  { subject:'Computer Sc.',score:95, max:100, grade:'A+', color:'#0EA5E9', teacher:'Mr. Amit Sharma',  timg:'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=40&h=40&fit=crop&crop=face', ut1:92, ut2:95, mid:94 },
+  { subject:'Hindi',       score:81, max:100, grade:'A',  color:'#DC2626', teacher:'Ms. Kavya Reddy',  timg:'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=40&h=40&fit=crop&crop=face', ut1:78, ut2:81, mid:80 },
+];
+const gradeColors = { 'A+':'#DCFCE7', 'A':'#DBEAFE', 'B+':'#EDE9FE', 'B':'#FEF3C7' };
+const gradeText   = { 'A+':'#16A34A', 'A':'#1E40AF', 'B+':'#7C3AED', 'B':'#D97706' };
+
+const container = document.getElementById('subjectGrades');
+grades.forEach(g => {
+  container.innerHTML += `
+    <div class="sg-card">
+      <div class="sg-header">
+        <div class="sg-dot" style="background:${g.color}"></div>
+        <div class="sg-subject">${g.subject}</div>
+        <div class="sg-grade" style="color:${g.color}">${g.grade}</div>
+      </div>
+      <div class="sg-body">
+        <div class="sg-bar"><div class="sg-fill" style="width:${g.score}%;background:${g.color}"></div></div>
+        <div class="sg-row"><span>Score</span><span>${g.score} / ${g.max}</span></div>
+        <div class="sg-row"><span>Unit Test 1</span><span>${g.ut1}%</span></div>
+        <div class="sg-row"><span>Unit Test 2</span><span>${g.ut2}%</span></div>
+        <div class="sg-row"><span>Mid-Term</span><span>${g.mid}%</span></div>
+        <div class="sg-teacher">
+          <img src="${g.timg}" alt="${g.teacher}" />
+          <span>${g.teacher}</span>
+          <span class="badge" style="margin-left:auto;background:${gradeColors[g.grade]||'#F1F5F9'};color:${gradeText[g.grade]||'#64748B'}">${g.grade}</span>
+        </div>
+      </div>
+    </div>`;
+});
+
+document.querySelectorAll('.exam-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.exam-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>
+

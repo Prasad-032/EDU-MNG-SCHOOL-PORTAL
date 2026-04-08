@@ -1,0 +1,599 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduManage School — Excellence in Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- PAGE LOADER -->
+  <div id="page-loader">
+    <div class="loader-logo">
+      <div class="loader-logo-icon">E</div>
+      <div>
+        <div class="loader-logo-text">EduManage School</div>
+        <div class="loader-logo-sub">Est. 1998 · CBSE Affiliated</div>
+      </div>
+    </div>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <!-- Announcement ticker -->
+    <div class="announcement-bar">
+      <span class="ann-label">📢 Notice:</span>
+      <div class="ann-ticker">
+        <span>Admissions open for 2026–27 — Apply before May 31 &nbsp;|&nbsp; Annual Sports Day on April 20 &nbsp;|&nbsp; Term 2 Results published — check your portal &nbsp;|&nbsp; Parent-Teacher Meeting: April 12, 10 AM – 1 PM</span>
+      </div>
+      <a href="login.html" class="ann-portal-link">Student Portal →</a>
+    </div>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">E</div>
+        <div>
+          <div style="font-size:16px;font-weight:800;line-height:1.1">EduManage School</div>
+          <div style="font-size:10px;font-weight:500;color:var(--gray);letter-spacing:0.3px">Est. 1998 · CBSE Affiliated</div>
+        </div>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#teachers">Teachers</a>
+        <a href="#gallery">Campus</a>
+        <a href="#admissions">Admissions</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">🔑 Portal Login</a>
+        <a href="register.html" class="btn btn-primary">Apply Now</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1600&h=900&fit=crop&crop=center" alt="" />
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">🏆 Ranked #1 School in the District — 2026</div>
+        <h1>Where Every Child <span class="highlight">Discovers Their Potential</span></h1>
+        <p class="hero-sub">A nurturing environment where academic excellence meets holistic development. Shaping confident, curious, and compassionate leaders of tomorrow.</p>
+        <div class="hero-actions">
+          <a href="register.html" class="btn btn-primary btn-lg">Apply for Admission</a>
+          <a href="#" class="btn btn-outline btn-lg" id="watchDemoBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            Virtual Tour
+          </a>
+        </div>
+        <div class="hero-trust">
+          <span>✓ Est. 1998 · 25+ years of excellence</span>
+          <span>✓ CBSE Affiliated</span>
+          <span>✓ Admissions Open 2026–27</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-photo-grid">
+          <div class="hpg-cell hpg-tall">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=480&h=640&fit=crop" alt="Students studying" />
+            <div class="hpg-badge hpg-badge-blue"><span class="hpg-badge-icon">🎓</span> 1,248 Students</div>
+          </div>
+          <div class="hpg-right-col">
+            <div class="hpg-cell hpg-wide">
+              <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&h=300&fit=crop" alt="Happy students in classroom" />
+              <div class="hpg-badge hpg-badge-green"><span class="hpg-badge-icon">✓</span> 98% Board Pass Rate</div>
+            </div>
+            <div class="hpg-bottom-row">
+              <div class="hpg-cell">
+                <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=300&h=260&fit=crop" alt="Student with tablet" />
+              </div>
+              <div class="hpg-cell">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=300&h=260&fit=crop" alt="Teacher with students" />
+                <div class="hpg-badge hpg-badge-orange"><span class="hpg-badge-icon">⭐</span> 4.9 Parent Rating</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-card card-attendance">
+          <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=40&h=40&fit=crop&crop=face" alt="Student" class="fc-photo" />
+          <div><div class="fc-title">Today's Attendance</div><div class="fc-sub">Class 10A — 42/42 present</div></div>
+        </div>
+        <div class="floating-card card-payment">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Teacher" class="fc-photo" />
+          <div><div class="fc-title">New Achievement</div><div class="fc-sub">Raju Sharma — State Topper 🏆</div></div>
+        </div>
+        <div class="hero-avatars-strip">
+          <div class="has-label">Our Students</div>
+          <div class="has-faces">
+            <img src="https://images.unsplash.com/photo-1545696968-1a31da406a64?w=48&h=48&fit=crop&crop=face" alt="Student" />
+            <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=48&h=48&fit=crop&crop=face" alt="Student" />
+            <img src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=48&h=48&fit=crop&crop=face" alt="Student" />
+            <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=48&h=48&fit=crop&crop=face" alt="Student" />
+            <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=48&h=48&fit=crop&crop=face" alt="Student" />
+            <div class="has-more">+1.2K</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#F1F5F9"/></svg>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="stats-strip" id="stats">
+    <div class="container stats-inner">
+      <div class="stat-item">
+        <div class="stat-icon">🎓</div>
+        <div class="stat-num" data-target="1248" data-suffix="+">0</div>
+        <div class="stat-label">Students Enrolled</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-icon">👩‍🏫</div>
+        <div class="stat-num" data-target="48" data-suffix="+">0</div>
+        <div class="stat-label">Expert Teachers</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-num" data-target="98" data-suffix="%">0</div>
+        <div class="stat-label">Board Pass Rate</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-icon">📅</div>
+        <div class="stat-num" data-target="25" data-suffix="+ yrs">0</div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-icon">🥇</div>
+        <div class="stat-num" data-target="200" data-suffix="+">0</div>
+        <div class="stat-label">Awards Won</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section" id="about">
+    <div class="container about-grid">
+      <div class="about-images">
+        <div class="about-img-main">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=700&h=500&fit=crop&crop=center" alt="School building" />
+        </div>
+        <div class="about-img-small">
+          <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=300&h=220&fit=crop" alt="Classroom" />
+        </div>
+        <div class="about-badge-float">
+          <div class="abf-num">Est.</div>
+          <div class="abf-year">1998</div>
+          <div class="abf-label">25+ Years of Trust</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="section-badge">About Our School</div>
+        <h2>A Legacy of Learning, A Future of Leaders</h2>
+        <p>EduManage School has been a cornerstone of quality education since 1998. Nestled in the heart of the city, our campus provides a safe, stimulating, and inclusive environment where every student is encouraged to explore, question, and grow.</p>
+        <p style="margin-top:14px">We believe education goes beyond textbooks — it's about building character, fostering creativity, and preparing students for a rapidly changing world.</p>
+        <div class="about-values">
+          <div class="about-value"><div class="av-icon" style="background:#DBEAFE">📚</div><div><div class="av-title">Academic Excellence</div><div class="av-sub">Rigorous curriculum with CBSE affiliation</div></div></div>
+          <div class="about-value"><div class="av-icon" style="background:#DCFCE7">🌱</div><div><div class="av-title">Holistic Development</div><div class="av-sub">Sports, arts, music and life skills</div></div></div>
+          <div class="about-value"><div class="av-icon" style="background:#EDE9FE">🤝</div><div><div class="av-title">Inclusive Community</div><div class="av-sub">Every child belongs and thrives here</div></div></div>
+          <div class="about-value"><div class="av-icon" style="background:#FEF3C7">💡</div><div><div class="av-title">Innovation & Tech</div><div class="av-sub">Smart classrooms and digital learning</div></div></div>
+        </div>
+        <a href="register.html" class="btn btn-primary btn-lg" style="margin-top:8px">Apply for Admission →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACILITIES -->
+  <section class="facilities-section" id="facilities">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">World-Class Facilities</div>
+        <h2>Everything a Child Needs to Thrive</h2>
+        <p>Our campus is designed to inspire curiosity, encourage creativity, and support every aspect of a student's growth.</p>
+      </div>
+      <div class="facilities-grid">
+        <div class="facility-card fc-large">
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=500&fit=crop&crop=top" alt="Smart Classrooms" />
+          <div class="facility-overlay">
+            <div class="facility-icon">🖥</div>
+            <h3>Smart Classrooms</h3>
+            <p>Interactive whiteboards, projectors and high-speed internet in every classroom for an immersive learning experience.</p>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=300&fit=crop" alt="Sports Ground" />
+          <div class="facility-overlay">
+            <div class="facility-icon">⚽</div>
+            <h3>Sports Complex</h3>
+            <p>Full-size football ground, basketball courts, cricket pitch and indoor badminton hall.</p>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop" alt="Library" />
+          <div class="facility-overlay">
+            <div class="facility-icon">📚</div>
+            <h3>Digital Library</h3>
+            <p>Over 15,000 books, e-resources, and a dedicated reading room for students of all grades.</p>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400&h=300&fit=crop" alt="Science Lab" />
+          <div class="facility-overlay">
+            <div class="facility-icon">🔬</div>
+            <h3>Science Labs</h3>
+            <p>Fully equipped Physics, Chemistry and Biology labs with modern instruments for hands-on experiments.</p>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&h=300&fit=crop" alt="Music Room" />
+          <div class="facility-overlay">
+            <div class="facility-icon">🎵</div>
+            <h3>Music & Arts</h3>
+            <p>Dedicated music room with instruments, art studio, and a 400-seat auditorium for performances.</p>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop" alt="Computer Lab" />
+          <div class="facility-overlay">
+            <div class="facility-icon">💻</div>
+            <h3>Computer Lab</h3>
+            <p>120 high-performance computers with coding, robotics and AI curriculum for Classes 6–12.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHERS -->
+  <section class="teachers-section" id="teachers">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Our Faculty</div>
+        <h2>Learn from the Best</h2>
+        <p>Our teachers are not just educators — they are mentors, guides, and role models who inspire students every single day.</p>
+      </div>
+      <div class="teachers-grid">
+        <div class="teacher-profile-card">
+          <div class="tpc-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop&crop=face" alt="Priya Nair" />
+          </div>
+          <div class="tpc-body">
+            <div class="tpc-name">Dr. Priya Nair</div>
+            <div class="tpc-role">Principal & Head of Science</div>
+            <div class="tpc-exp">22 years experience · PhD in Education</div>
+            <p class="tpc-quote">"Every child is gifted. Our job is to unwrap that gift."</p>
+            <div class="tpc-subjects"><span>Physics</span><span>Leadership</span></div>
+          </div>
+        </div>
+        <div class="teacher-profile-card">
+          <div class="tpc-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=300&h=300&fit=crop&crop=face" alt="Rajesh Kumar" />
+          </div>
+          <div class="tpc-body">
+            <div class="tpc-name">Mr. Rajesh Kumar</div>
+            <div class="tpc-role">Head of Mathematics</div>
+            <div class="tpc-exp">15 years experience · M.Sc Mathematics</div>
+            <p class="tpc-quote">"Mathematics is not about numbers — it's about understanding patterns in life."</p>
+            <div class="tpc-subjects"><span>Maths</span><span>Statistics</span></div>
+          </div>
+        </div>
+        <div class="teacher-profile-card">
+          <div class="tpc-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=300&fit=crop&crop=face" alt="Sunita Mehta" />
+          </div>
+          <div class="tpc-body">
+            <div class="tpc-name">Ms. Sunita Mehta</div>
+            <div class="tpc-role">English & Literature</div>
+            <div class="tpc-exp">12 years experience · MA English</div>
+            <p class="tpc-quote">"Reading opens doors to worlds you never knew existed."</p>
+            <div class="tpc-subjects"><span>English</span><span>Creative Writing</span></div>
+          </div>
+        </div>
+        <div class="teacher-profile-card">
+          <div class="tpc-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face" alt="Amit Sharma" />
+          </div>
+          <div class="tpc-body">
+            <div class="tpc-name">Mr. Amit Sharma</div>
+            <div class="tpc-role">Computer Science & Robotics</div>
+            <div class="tpc-exp">10 years experience · B.Tech CS</div>
+            <p class="tpc-quote">"The future belongs to those who learn to code and create."</p>
+            <div class="tpc-subjects"><span>CS</span><span>Robotics</span><span>AI</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px">
+        <a href="admin/teachers.html" class="btn btn-outline btn-lg">Meet All 48 Teachers →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CAMPUS GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Campus Life</div>
+        <h2>A Glimpse of Our School</h2>
+        <p>From vibrant classrooms to lush playgrounds — our campus is a place where memories are made every day.</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item g-wide"><img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&h=400&fit=crop&crop=center" alt="Students in classroom" /></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=300&fit=crop" alt="Sports" /></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&crop=top" alt="Teacher with students" /></div>
+        <div class="gallery-item g-tall"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=600&fit=crop" alt="Students studying" /></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop" alt="Library" /></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400&h=300&fit=crop" alt="Science lab" /></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&h=300&fit=crop" alt="Music" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMISSIONS -->
+  <section class="admissions-section" id="admissions">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Admissions 2026–27</div>
+        <h2>Join Our School Family</h2>
+        <p>Applications are now open for Classes 1–12. Seats are limited — apply early to secure your child's future.</p>
+      </div>
+      <div class="admissions-grid">
+        <div>
+          <h3 style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:24px">How to Apply</h3>
+          <div class="admissions-steps">
+            <div class="adm-step"><div class="adm-step-num">1</div><div><div class="adm-step-title">Fill the Online Form</div><div class="adm-step-sub">Complete the application with your child's details and upload required documents.</div></div></div>
+            <div class="adm-step"><div class="adm-step-num">2</div><div><div class="adm-step-title">Entrance Assessment</div><div class="adm-step-sub">Students appear for a friendly aptitude test. Classes 1–3 have an interaction session instead.</div></div></div>
+            <div class="adm-step"><div class="adm-step-num">3</div><div><div class="adm-step-title">Parent Interview</div><div class="adm-step-sub">A brief meeting with the principal to understand your child's needs and our school's vision.</div></div></div>
+            <div class="adm-step"><div class="adm-step-num">4</div><div><div class="adm-step-title">Admission Confirmed</div><div class="adm-step-sub">Receive your admission letter, pay the fee, and your child is officially part of our family!</div></div></div>
+          </div>
+          <div style="margin-top:24px;padding:16px 20px;background:var(--blue-s);border-radius:var(--radius-lg);border-left:4px solid var(--blue)">
+            <div style="font-size:14px;font-weight:700;color:var(--blue)">📅 Important Dates</div>
+            <div style="font-size:13px;color:var(--dark);margin-top:8px;display:flex;flex-direction:column;gap:4px">
+              <span>Application Deadline: <strong>May 31, 2026</strong></span>
+              <span>Entrance Test: <strong>June 10–12, 2026</strong></span>
+              <span>Results: <strong>June 20, 2026</strong></span>
+              <span>Classes Begin: <strong>July 1, 2026</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="adm-form-card">
+          <h3>Quick Enquiry</h3>
+          <p>Fill this form and our admissions team will call you within 24 hours.</p>
+          <form class="adm-form" id="enquiryForm">
+            <div class="adm-row">
+              <div class="adm-field"><label>Parent Name *</label><input type="text" placeholder="Your full name" required /></div>
+              <div class="adm-field"><label>Phone *</label><input type="tel" placeholder="+91 98765 43210" required /></div>
+            </div>
+            <div class="adm-field"><label>Email Address *</label><input type="email" placeholder="you@email.com" required /></div>
+            <div class="adm-row">
+              <div class="adm-field"><label>Child's Name *</label><input type="text" placeholder="Child's full name" required /></div>
+              <div class="adm-field"><label>Applying for Class *</label>
+                <select required><option value="">Select class</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option><option>Class 11</option><option>Class 12</option></select>
+              </div>
+            </div>
+            <div class="adm-field"><label>Message (optional)</label><input type="text" placeholder="Any specific questions?" /></div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:4px">Submit Enquiry →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">What Parents Say</div>
+        <h2>Trusted by 1,200+ Families</h2>
+        <p>Hear from the parents and students who are part of our school community.</p>
+      </div>
+      <div class="rev-carousel" id="revCarousel">
+        <div class="rev-track" id="revTrack">
+          <div class="rev-card"><div class="rev-img"><img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=500&h=180&fit=crop&crop=center" alt="Classroom"/><div class="rev-img-tint"></div></div><div class="rev-face-row"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&crop=face" alt="Priya Nair" class="rev-face"/><span class="rev-verified">&#10003; Verified</span></div><div class="rev-body"><div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"EduManage School has been a life-changing experience for my daughter. The teachers genuinely care about every child."</p><div class="rev-author"><strong>Priya Nair</strong><span>Parent of Class 8 &middot; 3 years</span></div></div></div>
+          <div class="rev-card"><div class="rev-img"><img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=500&h=180&fit=crop&crop=center" alt="Sports"/><div class="rev-img-tint"></div></div><div class="rev-face-row"><img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=80&h=80&fit=crop&crop=face" alt="Rajesh Kumar" class="rev-face"/><span class="rev-verified">&#10003; Verified</span></div><div class="rev-body"><div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The sports facilities are outstanding. My son found his passion for cricket and coding at the same school!"</p><div class="rev-author"><strong>Rajesh Kumar</strong><span>Parent of Class 10</span></div></div></div>
+          <div class="rev-card"><div class="rev-img"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&h=180&fit=crop&crop=top" alt="Students"/><div class="rev-img-tint"></div></div><div class="rev-face-row"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&crop=face" alt="Sunita Mehta" class="rev-face"/><span class="rev-verified">&#10003; Verified</span></div><div class="rev-body"><div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The online portal keeps me updated on my child's attendance and grades in real time. I feel connected even when at work."</p><div class="rev-author"><strong>Sunita Mehta</strong><span>Parent of Class 7</span></div></div></div>
+          <div class="rev-card"><div class="rev-img"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500&h=180&fit=crop&crop=top" alt="Teacher"/><div class="rev-img-tint"></div></div><div class="rev-face-row"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face" alt="Amit Sharma" class="rev-face"/><span class="rev-verified">&#10003; Verified</span></div><div class="rev-body"><div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div><p>"My daughter scored 98% in her board exams. The teachers go above and beyond with extra classes and constant encouragement."</p><div class="rev-author"><strong>Amit Sharma</strong><span>Parent of Class 12</span></div></div></div>
+          <div class="rev-card"><div class="rev-img"><img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=500&h=180&fit=crop&crop=top" alt="Teacher teaching"/><div class="rev-img-tint"></div></div><div class="rev-face-row"><img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=80&h=80&fit=crop&crop=face" alt="Raju Sharma" class="rev-face"/><span class="rev-verified">&#10003; Student</span></div><div class="rev-body"><div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The student portal makes it so easy to check my timetable, grades and assignments. I never miss a deadline anymore!"</p><div class="rev-author"><strong>Raju Sharma</strong><span>Class 10A Student</span></div></div></div>
+          <div class="rev-card"><div class="rev-img"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=180&fit=crop&crop=center" alt="Library"/><div class="rev-img-tint"></div></div><div class="rev-face-row"><img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=80&h=80&fit=crop&crop=face" alt="Meera Joshi" class="rev-face"/><span class="rev-verified">&#10003; Verified</span></div><div class="rev-body"><div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The library and science labs are world-class. My child comes home excited about what she learned every single day."</p><div class="rev-author"><strong>Meera Joshi</strong><span>Parent of Class 6</span></div></div></div>
+        </div>
+        <button class="rev-arrow rev-prev" id="revPrev" aria-label="Previous"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button class="rev-arrow rev-next" id="revNext" aria-label="Next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+      <div class="rev-dots" id="revDots"></div>
+    </div>
+  </section>
+  <!-- LOCATION -->
+  <section class="location-section" id="location">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Find Us</div>
+        <h2>Our Campus Location</h2>
+        <p>Conveniently located in the heart of the city with easy access by road and public transport.</p>
+      </div>
+      <div class="location-grid">
+        <div class="location-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.0540887!2d72.8296!3d19.0596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c9b888ae67fd%3A0x1!2sBandra+West%2C+Mumbai%2C+Maharashtra!5e0!3m2!1sen!2sin!4v1"
+            width="100%" height="420"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="EduManage School Location">
+          </iframe>
+        </div>
+        <div class="location-info">
+          <h2>Visit Our Campus</h2>
+          <p>We welcome parents and students to visit our campus any weekday. Our admissions team is available to give you a guided tour and answer all your questions.</p>
+          <div class="location-details">
+            <div class="loc-detail"><div class="loc-icon">📍</div><div><div class="loc-label">Address</div><div class="loc-val">123 School Road, Bandra West,<br/>Mumbai — 400050, Maharashtra</div></div></div>
+            <div class="loc-detail"><div class="loc-icon">📞</div><div><div class="loc-label">Phone</div><div class="loc-val">+91 800 123 4567</div></div></div>
+            <div class="loc-detail"><div class="loc-icon">📧</div><div><div class="loc-label">Email</div><div class="loc-val">admissions@edumanage.school</div></div></div>
+            <div class="loc-detail"><div class="loc-icon">🕐</div><div><div class="loc-label">Office Hours</div><div class="loc-val">Mon–Sat: 8:00 AM – 4:00 PM</div></div></div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="contact.html" class="btn btn-primary">Schedule a Visit →</a>
+            <a href="tel:+918001234567" class="btn btn-outline">📞 Call Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIGITAL PORTAL SECTION -->
+  <section class="portal-section" id="portal">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">🖥 Our Digital School Portal</div>
+        <h2>Everything Your Child Needs, Online</h2>
+        <p>EduManage School runs on a fully digital management system — giving students, parents and teachers real-time access to everything from attendance to report cards.</p>
+      </div>
+      <div class="portal-cards">
+        <div class="portal-card" style="border-top:4px solid #1E40AF">
+          <div class="pc-icon" style="background:#DBEAFE">🎓</div>
+          <h3>Student Portal</h3>
+          <p>Check timetable, view grades, submit assignments, pay fees and track attendance — all from one place.</p>
+          <a href="login.html" class="pc-link" style="color:#1E40AF">Login as Student →</a>
+        </div>
+        <div class="portal-card" style="border-top:4px solid #16A34A">
+          <div class="pc-icon" style="background:#DCFCE7">👩‍🏫</div>
+          <h3>Teacher Portal</h3>
+          <p>Mark attendance in 60 seconds, enter grades, manage assignments and communicate with parents directly.</p>
+          <a href="login.html" class="pc-link" style="color:#16A34A">Login as Teacher →</a>
+        </div>
+        <div class="portal-card" style="border-top:4px solid #D97706">
+          <div class="pc-icon" style="background:#FEF3C7">👪</div>
+          <h3>Parent Portal</h3>
+          <p>Track your child's attendance, grades and bus location in real time. Pay fees with one tap.</p>
+          <a href="login.html" class="pc-link" style="color:#D97706">Login as Parent →</a>
+        </div>
+        <div class="portal-card" style="border-top:4px solid #7C3AED">
+          <div class="pc-icon" style="background:#EDE9FE">🏫</div>
+          <h3>Admin Portal</h3>
+          <p>Full school management — students, staff, fees, timetables, reports and communications in one dashboard.</p>
+          <a href="login.html" class="pc-link" style="color:#7C3AED">Login as Admin →</a>
+        </div>
+      </div>
+      <div class="portal-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        New to the portal? Your login credentials are shared by the school office at the time of admission. <a href="contact.html">Contact us</a> if you need help.
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container cta-inner">
+      <div class="cta-text">
+        <div class="cta-faces">
+          <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=56&h=56&fit=crop&crop=face" alt="Student" />
+          <img src="https://images.unsplash.com/photo-1545696968-1a31da406a64?w=56&h=56&fit=crop&crop=face" alt="Student" />
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=56&h=56&fit=crop&crop=face" alt="Teacher" />
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=56&h=56&fit=crop&crop=face" alt="Parent" />
+          <div class="cta-faces-more">+1.2K</div>
+        </div>
+        <h2>Give Your Child the Best Start in Life</h2>
+        <p>Join 1,200+ families who trust EduManage School. Admissions open for 2026–27.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="register.html" class="btn btn-white btn-lg">Apply for Admission</a>
+        <a href="contact.html" class="btn btn-outline-white btn-lg">Schedule a Visit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo"><div class="logo-icon">E</div><span style="color:#fff">EduManage School</span></a>
+        <p>Nurturing young minds since 1998. CBSE-affiliated school committed to academic excellence and holistic development.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="YouTube">▶</a>
+          <a href="#" aria-label="Twitter">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>School</h4>
+        <a href="#about">About Us</a><a href="#facilities">Facilities</a>
+        <a href="#teachers">Our Teachers</a><a href="#gallery">Campus Gallery</a>
+        <a href="#admissions">Admissions</a>
+      </div>
+      <div class="footer-col">
+        <h4>Academics</h4>
+        <a href="#">Curriculum</a><a href="#">CBSE Affiliation</a>
+        <a href="#">Results & Achievements</a><a href="#">Clubs & Activities</a>
+        <a href="#">School Calendar</a>
+      </div>
+      <div class="footer-col">
+        <h4>Portal</h4>
+        <a href="login.html">Student Login</a><a href="login.html">Teacher Login</a>
+        <a href="login.html">Parent Login</a><a href="register.html">New Admission</a>
+        <a href="forgot-password.html">Reset Password</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="contact.html">Contact Us</a><a href="contact.html">Admissions Office</a>
+        <a href="#">Grievance Cell</a><a href="#">Alumni Network</a><a href="#">Careers</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <span>© 2026 EduManage School. All rights reserved. CBSE Affiliation No. 1234567</span>
+        <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- VIDEO MODAL -->
+  <div class="demo-backdrop" id="demoBackdrop" aria-hidden="true">
+    <div class="demo-modal" role="dialog" aria-modal="true">
+      <div class="demo-modal-header">
+        <div class="demo-modal-title">
+          <div class="demo-title-icon">▶</div>
+          <div><div class="demo-title-text">EduManage School — Virtual Tour</div><div class="demo-title-sub">Explore our campus, classrooms, labs and sports facilities</div></div>
+        </div>
+        <button class="demo-close" id="demoClose" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="demo-video-wrap">
+        <video id="demoVideo" src="EduManage_Masterclass_%E2%80%93_A_Day_in_the_Life.mp4" controls preload="metadata" poster="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&h=675&fit=crop&crop=center"></video>
+        <div class="demo-play-overlay" id="demoPlayOverlay">
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&h=675&fit=crop&crop=center" alt="Campus" />
+          <div class="demo-play-tint"></div>
+          <div class="demo-play-btn"><svg width="32" height="32" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <div class="demo-play-label">EduManage School — Virtual Campus Tour</div>
+        </div>
+      </div>
+      <div class="demo-modal-footer">
+        <span class="demo-chip">🏫 Campus Tour</span>
+        <span class="demo-chip">🔬 Science Labs</span>
+        <span class="demo-chip">⚽ Sports Complex</span>
+        <span class="demo-chip demo-chip-time">⏱ 3 min watch</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoices — EduManage Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+  <style>
+    .inv-layout { display:grid; grid-template-columns:1fr 420px; gap:20px; }
+    /* Form side */
+    .inv-form-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; }
+    .inv-form-header { padding:16px 20px; border-bottom:1px solid var(--border); font-size:15px; font-weight:700; color:var(--dark); }
+    .inv-form-body { padding:20px; display:flex; flex-direction:column; gap:16px; }
+    .inv-items-table { width:100%; border-collapse:collapse; }
+    .inv-items-table th { font-size:11px; font-weight:700; color:var(--gray); text-transform:uppercase; padding:8px 10px; background:var(--surface); border-bottom:1px solid var(--border); }
+    .inv-items-table td { padding:8px 10px; border-bottom:1px solid var(--border); font-size:13px; }
+    .inv-items-table input { width:100%; border:none; outline:none; font-size:13px; font-family:'Inter',sans-serif; background:transparent; }
+    .inv-total-row { display:flex; justify-content:flex-end; gap:40px; padding:12px 10px; background:var(--surface); border-radius:var(--radius-md); }
+    .inv-total-label { font-size:13px; color:var(--gray); }
+    .inv-total-val   { font-size:15px; font-weight:800; color:var(--dark); }
+    .inv-total-val.grand { color:var(--blue); font-size:18px; }
+    /* Preview side */
+    .inv-preview { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; position:sticky; top:80px; }
+    .inv-preview-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .inv-preview-body { padding:24px; }
+    .inv-school-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:2px solid var(--blue); }
+    .inv-school-logo { width:48px; height:48px; background:var(--blue); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:22px; font-weight:900; }
+    .inv-school-name { font-size:16px; font-weight:800; color:var(--dark); }
+    .inv-school-sub  { font-size:11px; color:var(--gray); }
+    .inv-meta { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .inv-meta-item label { font-size:10px; font-weight:700; color:var(--gray); text-transform:uppercase; display:block; margin-bottom:2px; }
+    .inv-meta-item span  { font-size:13px; font-weight:600; color:var(--dark); }
+    .inv-preview-table { width:100%; border-collapse:collapse; margin-bottom:16px; }
+    .inv-preview-table th { font-size:10px; font-weight:700; color:var(--gray); text-transform:uppercase; padding:6px 8px; background:var(--surface); border-bottom:1px solid var(--border); }
+    .inv-preview-table td { padding:8px 8px; font-size:12px; border-bottom:1px solid var(--border); }
+    .inv-preview-total { text-align:right; padding:8px 0; }
+    .inv-preview-total div { display:flex; justify-content:flex-end; gap:24px; font-size:12px; color:var(--gray); margin-bottom:4px; }
+    .inv-preview-total .grand { font-size:16px; font-weight:800; color:var(--blue); }
+    .inv-stamp { display:inline-block; border:3px solid var(--green); color:var(--green); padding:4px 12px; border-radius:6px; font-size:14px; font-weight:800; transform:rotate(-8deg); margin-top:12px; }
+
+    .st-pagination { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-top:1px solid var(--border); flex-wrap:wrap; gap:10px; font-size:13px; color:var(--gray); }
+    .st-page-btns  { display:flex; gap:4px; }
+
+    @media(max-width:1100px){ .inv-layout { grid-template-columns:1fr; } .inv-preview { position:static; } }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo"><div class="sb-logo-icon">E</div><span class="sb-logo-text">EduManage</span></div>
+    <nav class="sb-nav">
+      <div class="sb-group-label">Overview</div>
+      <a href="dashboard.html" class="sb-item" data-label="Dashboard"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="sb-item-label">Dashboard</span></a>
+      <div class="sb-group-label">Academics</div>
+      <a href="students.html" class="sb-item" data-label="Students"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="sb-item-label">Students</span></a>
+      <a href="teachers.html" class="sb-item" data-label="Teachers"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="sb-item-label">Teachers</span></a>
+      <div class="sb-group-label">Finance</div>
+      <a href="fees.html" class="sb-item" data-label="Fees"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="sb-item-label">Fee Management</span></a>
+      <a href="invoices.html" class="sb-item active" data-label="Invoices"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span class="sb-item-label">Invoices</span></a>
+      <div class="sb-group-label">Management</div>
+      <a href="reports.html" class="sb-item" data-label="Reports"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="sb-item-label">Reports</span></a>
+      <a href="settings.html" class="sb-item" data-label="Settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="sb-item-label">Settings</span></a>
+    </nav>
+        <button class="sb-logout-btn logout-btn" title="Logout">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Logout</span>
+    </button>
+<div class="sb-user">
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=64&h=64&fit=crop&crop=face" alt="Admin" class="sb-user-avatar" />
+      <div class="sb-user-info"><div class="sb-user-name">Priya Nair</div><div class="sb-user-role">Principal</div></div>
+      <button class="sb-collapse-btn" id="sidebarToggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+    </div>
+  </aside>
+
+  <div class="admin-main" id="adminMain">
+    <header class="topbar">
+      <div><div class="topbar-title">Invoice Generator</div><div class="topbar-breadcrumb">Admin / Finance / Invoices</div></div>
+      <div class="topbar-actions">
+        <button class="topbar-icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="topbar-notif-badge">5</span></button>
+                <div class="user-menu-wrap">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=64&h=64&fit=crop&crop=face" alt="Admin" class="topbar-avatar" />
+          <div class="user-dropdown" id="adminUserDropdown">
+            <div class="ud-header"><div class="ud-name">Priya Nair</div><div class="ud-role">Principal &middot; Admin</div>            <a href="profile.html" class="ud-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              My Profile
+            </a>
+            </div>
+            <a href="settings.html" class="ud-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>
+              Settings
+            </a>
+            <a href="../login.html" class="ud-item logout logout-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="inv-layout">
+
+        <!-- LEFT: Form -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+
+          <!-- Student selector -->
+          <div class="inv-form-card">
+            <div class="inv-form-header">Student Details</div>
+            <div class="inv-form-body">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Select Student *</label>
+                  <select class="form-select" id="studentSelect">
+                    <option value="">Search student…</option>
+                    <option value="raju">Raju Sharma — Class 10A</option>
+                    <option value="priya">Priya Nair — Class 10B</option>
+                    <option value="anita">Anita Roy — Class 9A</option>
+                    <option value="karan">Karan Mehta — Class 9B</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Invoice Date *</label>
+                  <input class="form-input" type="date" id="invDate" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Due Date *</label>
+                  <input class="form-input" type="date" id="dueDate" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Academic Term</label>
+                  <select class="form-select">
+                    <option>Term 1 — April 2026</option>
+                    <option>Term 2 — October 2026</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fee items -->
+          <div class="inv-form-card">
+            <div class="inv-form-header" style="display:flex;justify-content:space-between;align-items:center">
+              Fee Items
+              <button class="btn btn-outline btn-sm" id="addItemBtn">+ Add Item</button>
+            </div>
+            <div class="inv-form-body" style="padding:0">
+              <table class="inv-items-table">
+                <thead><tr><th>Description</th><th>Qty</th><th>Amount (₹)</th><th>Discount</th><th>Total</th><th></th></tr></thead>
+                <tbody id="itemsBody">
+                  <tr><td><input value="Tuition Fee" /></td><td><input type="number" value="1" style="width:50px" /></td><td><input type="number" value="8500" class="amt-input" /></td><td><input type="number" value="0" class="disc-input" style="width:60px" />%</td><td class="row-total">₹8,500</td><td><button class="btn btn-ghost btn-sm remove-row">✕</button></td></tr>
+                  <tr><td><input value="Transport Fee" /></td><td><input type="number" value="1" style="width:50px" /></td><td><input type="number" value="2200" class="amt-input" /></td><td><input type="number" value="0" class="disc-input" style="width:60px" />%</td><td class="row-total">₹2,200</td><td><button class="btn btn-ghost btn-sm remove-row">✕</button></td></tr>
+                </tbody>
+              </table>
+              <div style="padding:12px 10px">
+                <div class="inv-total-row">
+                  <div><div class="inv-total-label">Subtotal</div><div class="inv-total-val" id="subtotal">₹10,700</div></div>
+                  <div><div class="inv-total-label">Discount</div><div class="inv-total-val" id="discountTotal">₹0</div></div>
+                  <div><div class="inv-total-label">Grand Total</div><div class="inv-total-val grand" id="grandTotal">₹10,700</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="inv-form-card">
+            <div class="inv-form-header">Notes & Payment Info</div>
+            <div class="inv-form-body">
+              <div class="form-group"><label class="form-label">Payment Method</label><select class="form-select"><option>Online (UPI/Card)</option><option>Cash</option><option>Bank Transfer</option><option>Cheque</option></select></div>
+              <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" rows="2" style="height:auto;padding:10px" placeholder="Any additional notes for the parent…"></textarea></div>
+              <div style="display:flex;gap:10px">
+                <button class="btn btn-outline" style="flex:1">Save Draft</button>
+                <button class="btn btn-primary" style="flex:1" id="generateBtn">Generate & Send</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent invoices table -->
+          <div class="card">
+            <div class="card-header"><div class="card-title">Recent Invoices</div><button class="btn btn-outline btn-sm">View All</button></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Invoice #</th><th>Student</th><th>Amount</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="recentInvoices"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Live Preview -->
+        <div class="inv-preview">
+          <div class="inv-preview-header">
+            <span style="font-size:14px;font-weight:700;color:var(--dark)">Live Preview</span>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-outline btn-sm">🖨 Print</button>
+              <button class="btn btn-primary btn-sm">⬇ PDF</button>
+            </div>
+          </div>
+          <div class="inv-preview-body">
+            <div class="inv-school-header">
+              <div class="inv-school-logo">E</div>
+              <div><div class="inv-school-name">EduManage School</div><div class="inv-school-sub">123 School Road, Mumbai · +91 800 123 4567</div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+              <div><div style="font-size:20px;font-weight:800;color:var(--blue)">INVOICE</div><div style="font-size:12px;color:var(--gray)">#INV-2026-0042</div></div>
+              <div id="previewPaid" style="display:none"><div class="inv-stamp">PAID</div></div>
+            </div>
+            <div class="inv-meta">
+              <div class="inv-meta-item"><label>Billed To</label><span id="previewStudent">—</span></div>
+              <div class="inv-meta-item"><label>Invoice Date</label><span id="previewDate">—</span></div>
+              <div class="inv-meta-item"><label>Class</label><span id="previewClass">—</span></div>
+              <div class="inv-meta-item"><label>Due Date</label><span id="previewDue">—</span></div>
+            </div>
+            <table class="inv-preview-table">
+              <thead><tr><th>Description</th><th style="text-align:right">Amount</th></tr></thead>
+              <tbody id="previewItems">
+                <tr><td>Tuition Fee</td><td style="text-align:right">₹8,500</td></tr>
+                <tr><td>Transport Fee</td><td style="text-align:right">₹2,200</td></tr>
+              </tbody>
+            </table>
+            <div class="inv-preview-total">
+              <div><span>Subtotal</span><span id="pvSubtotal">₹10,700</span></div>
+              <div><span>Discount</span><span id="pvDiscount">₹0</span></div>
+              <div class="grand"><span>Total Due</span><span id="pvGrand">₹10,700</span></div>
+            </div>
+            <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--gray)">
+              Payment via UPI: school@upi · NEFT: HDFC0001234 · Acc: 1234567890
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+// Set today's date
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('invDate').value = today;
+const due = new Date(); due.setDate(due.getDate()+15);
+document.getElementById('dueDate').value = due.toISOString().split('T')[0];
+
+// Student select → update preview
+const students = { raju:{name:'Raju Sharma',cls:'Class 10A'}, priya:{name:'Priya Nair',cls:'Class 10B'}, anita:{name:'Anita Roy',cls:'Class 9A'}, karan:{name:'Karan Mehta',cls:'Class 9B'} };
+document.getElementById('studentSelect').addEventListener('change', function() {
+  const s = students[this.value];
+  document.getElementById('previewStudent').textContent = s ? s.name : '—';
+  document.getElementById('previewClass').textContent   = s ? s.cls  : '—';
+});
+document.getElementById('invDate').addEventListener('change', function() { document.getElementById('previewDate').textContent = this.value; });
+document.getElementById('dueDate').addEventListener('change', function() { document.getElementById('previewDue').textContent  = this.value; });
+
+// Recalculate totals
+function recalc() {
+  let sub = 0, disc = 0;
+  document.querySelectorAll('#itemsBody tr').forEach(row => {
+    const amt  = parseFloat(row.querySelector('.amt-input')?.value)  || 0;
+    const d    = parseFloat(row.querySelector('.disc-input')?.value) || 0;
+    const tot  = amt * (1 - d/100);
+    sub  += amt; disc += amt - tot;
+    const cell = row.querySelector('.row-total');
+    if(cell) cell.textContent = '₹' + tot.toLocaleString('en-IN');
+  });
+  const grand = sub - disc;
+  document.getElementById('subtotal').textContent    = '₹' + sub.toLocaleString('en-IN');
+  document.getElementById('discountTotal').textContent = '₹' + disc.toLocaleString('en-IN');
+  document.getElementById('grandTotal').textContent  = '₹' + grand.toLocaleString('en-IN');
+  document.getElementById('pvSubtotal').textContent  = '₹' + sub.toLocaleString('en-IN');
+  document.getElementById('pvDiscount').textContent  = '₹' + disc.toLocaleString('en-IN');
+  document.getElementById('pvGrand').textContent     = '₹' + grand.toLocaleString('en-IN');
+  // Update preview items
+  const pvItems = document.getElementById('previewItems');
+  pvItems.innerHTML = '';
+  document.querySelectorAll('#itemsBody tr').forEach(row => {
+    const desc = row.querySelector('input')?.value || '';
+    const tot  = row.querySelector('.row-total')?.textContent || '';
+    pvItems.innerHTML += `<tr><td>${desc}</td><td style="text-align:right">${tot}</td></tr>`;
+  });
+}
+document.getElementById('itemsBody').addEventListener('input', recalc);
+
+// Add item row
+document.getElementById('addItemBtn').addEventListener('click', () => {
+  const row = document.createElement('tr');
+  row.innerHTML = `<td><input value="New Fee Item" /></td><td><input type="number" value="1" style="width:50px"/></td><td><input type="number" value="0" class="amt-input"/></td><td><input type="number" value="0" class="disc-input" style="width:60px"/>%</td><td class="row-total">₹0</td><td><button class="btn btn-ghost btn-sm remove-row">✕</button></td>`;
+  document.getElementById('itemsBody').appendChild(row);
+  row.querySelector('.remove-row').addEventListener('click', () => { row.remove(); recalc(); });
+});
+document.querySelectorAll('.remove-row').forEach(btn => btn.addEventListener('click', () => { btn.closest('tr').remove(); recalc(); }));
+
+// Recent invoices
+const recent = [
+  { num:'INV-0041', student:'Priya Nair',  amount:'₹10,700', date:'Apr 3', status:'paid' },
+  { num:'INV-0040', student:'Arjun Patel', amount:'₹8,500',  date:'Apr 2', status:'paid' },
+  { num:'INV-0039', student:'Anita Roy',   amount:'₹10,700', date:'Apr 1', status:'pending' },
+  { num:'INV-0038', student:'Karan Mehta', amount:'₹8,500',  date:'Mar 28',status:'overdue' },
+];
+const feeBadge = { paid:'badge-green', pending:'badge-orange', overdue:'badge-red' };
+const tbody = document.getElementById('recentInvoices');
+if (!recent.length) {
+  tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <h3>No invoices yet</h3>
+    <p>Generate an invoice using the form on the left.</p>
+  </div></td></tr>`;
+} else {
+recent.forEach(r => {
+  tbody.innerHTML += `<tr>
+    <td style="font-weight:700;color:var(--blue)">${r.num}</td>
+    <td>${r.student}</td>
+    <td style="font-weight:700">${r.amount}</td>
+    <td style="color:var(--gray)">${r.date}</td>
+    <td><span class="badge ${feeBadge[r.status]}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
+    <td><div style="display:flex;gap:4px">
+      <button class="btn btn-outline btn-sm">View</button>
+      <button class="btn btn-ghost btn-sm">PDF</button>
+    </div></td>
+  </tr>`;
+});
+}
+</script>
+</body>
+</html>

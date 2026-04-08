@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fees — EduManage Student</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#1E40AF !important; --accent-s:#DBEAFE !important; --accent-h:#1D3588 !important; }
+    .bottom-nav { position:fixed;bottom:0;left:0;right:0;height:60px;background:#fff;border-top:1px solid var(--border);display:flex !important;z-index:40; }
+    .bn-item { flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;font-weight:600;color:var(--gray);text-decoration:none;transition:color 0.2s; }
+    .bn-item.active { color:#1E40AF; }
+    .bn-item svg { width:20px;height:20px;display:block; }
+
+    /* Status hero */
+    .fee-hero { border-radius:var(--radius-xl); padding:24px; margin-bottom:20px; color:#fff; }
+    .fee-hero.all-paid { background:linear-gradient(135deg,#16A34A,#15803D); }
+    .fee-hero.due      { background:linear-gradient(135deg,#DC2626,#B91C1C); }
+    .fee-hero.partial  { background:linear-gradient(135deg,#D97706,#B45309); }
+    .fh-label  { font-size:12px; opacity:0.8; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+    .fh-amount { font-size:36px; font-weight:900; margin:6px 0; }
+    .fh-sub    { font-size:13px; opacity:0.82; }
+    .fh-row    { display:flex; align-items:center; justify-content:space-between; }
+    .pay-btn   { background:#fff; color:#16A34A; border:none; border-radius:var(--radius-md); padding:10px 22px; font-size:14px; font-weight:800; cursor:pointer; }
+
+    /* Fee breakdown */
+    .fee-item { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border); }
+    .fee-item:last-child { border-bottom:none; }
+    .fi-left { display:flex; align-items:center; gap:12px; }
+    .fi-icon { width:38px; height:38px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+    .fi-name   { font-size:14px; font-weight:700; color:var(--dark); }
+    .fi-period { font-size:11px; color:var(--gray); margin-top:2px; }
+    .fi-amount { font-size:15px; font-weight:800; }
+    .fi-status { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+
+    /* Payment history */
+    .hist-item { display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border); }
+    .hist-item:last-child { border-bottom:none; }
+    .hist-icon { width:36px; height:36px; border-radius:50%; background:#DCFCE7; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+    .hist-title { font-size:13px; font-weight:600; color:var(--dark); }
+    .hist-date  { font-size:11px; color:var(--gray); margin-top:2px; }
+    .hist-amount{ margin-left:auto; font-size:14px; font-weight:800; color:#16A34A; }
+    .hist-receipt{ font-size:11px; color:#1E40AF; font-weight:600; cursor:pointer; margin-top:2px; }
+
+    /* Payment modal */
+    .pay-modal-backdrop { position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s; }
+    .pay-modal-backdrop.open { opacity:1;pointer-events:all; }
+    .pay-modal { background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:24px;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+    .pay-modal-backdrop.open .pay-modal { transform:translateY(0); }
+    .pay-method { display:flex;flex-direction:column;gap:10px;margin:16px 0; }
+    .pm-option { display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;transition:all 0.2s; }
+    .pm-option:hover,.pm-option.selected { border-color:#1E40AF;background:#EFF6FF; }
+    .pm-icon { font-size:22px; }
+    .pm-label { font-size:14px;font-weight:700;color:var(--dark); }
+    .pm-sub   { font-size:11px;color:var(--gray); }
+    .pay-now-btn { width:100%;height:52px;background:#1E40AF;color:#fff;border:none;border-radius:var(--radius-md);font-size:16px;font-weight:800;cursor:pointer;transition:filter 0.2s; }
+    .pay-now-btn:hover { filter:brightness(1.08); }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <a href="dashboard.html" style="display:flex;align-items:center;gap:6px;color:var(--gray);font-size:13px;font-weight:600">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Back
+    </a>
+    <div class="topbar-logo" style="margin-left:8px"><div class="topbar-logo-icon" style="background:#1E40AF">E</div>Fee Payment</div>
+    <span class="topbar-spacer"></span>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Raju Sharma</div><div class="ud-role">Student · Class 10A</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <!-- Fee status hero -->
+    <div class="fee-hero all-paid">
+      <div class="fh-row">
+        <div>
+          <div class="fh-label">Fee Status — April 2026</div>
+          <div class="fh-amount">All Paid ✓</div>
+          <div class="fh-sub">Next due: July 1, 2026 · ₹8,500 (Term 3)</div>
+        </div>
+        <div style="font-size:48px;opacity:0.3">💳</div>
+      </div>
+    </div>
+
+    <!-- Current term breakdown -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title">April 2026 — Fee Breakdown</div>
+        <span class="badge badge-green">Fully Paid</span>
+      </div>
+      <div class="fee-item">
+        <div class="fi-left"><div class="fi-icon" style="background:#DBEAFE">📚</div><div><div class="fi-name">Tuition Fee</div><div class="fi-period">Term 2 · April 2026</div></div></div>
+        <div class="fi-status"><div class="fi-amount" style="color:#16A34A">₹8,500</div><span class="badge badge-green">Paid</span></div>
+      </div>
+      <div class="fee-item">
+        <div class="fi-left"><div class="fi-icon" style="background:#DCFCE7">🚌</div><div><div class="fi-name">Transport Fee</div><div class="fi-period">Monthly · April 2026</div></div></div>
+        <div class="fi-status"><div class="fi-amount" style="color:#16A34A">₹2,200</div><span class="badge badge-green">Paid</span></div>
+      </div>
+      <div class="fee-item">
+        <div class="fi-left"><div class="fi-icon" style="background:#EDE9FE">🎨</div><div><div class="fi-name">Activity Fee</div><div class="fi-period">Annual · 2025–26</div></div></div>
+        <div class="fi-status"><div class="fi-amount" style="color:#16A34A">₹1,200</div><span class="badge badge-green">Paid</span></div>
+      </div>
+      <div class="fee-item">
+        <div class="fi-left"><div class="fi-icon" style="background:#FEF3C7">📝</div><div><div class="fi-name">Exam Fee</div><div class="fi-period">Term 2 · April 2026</div></div></div>
+        <div class="fi-status"><div class="fi-amount" style="color:#16A34A">₹800</div><span class="badge badge-green">Paid</span></div>
+      </div>
+      <div style="padding:14px 18px;background:var(--surface);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:14px;font-weight:700;color:var(--dark)">Total Paid</span>
+        <span style="font-size:18px;font-weight:900;color:#16A34A">₹12,700</span>
+      </div>
+    </div>
+
+    <!-- Upcoming -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title">Upcoming — July 2026</div>
+        <span class="badge badge-blue">Due Jul 1</span>
+      </div>
+      <div class="fee-item">
+        <div class="fi-left"><div class="fi-icon" style="background:#DBEAFE">📚</div><div><div class="fi-name">Tuition Fee</div><div class="fi-period">Term 3 · July 2026</div></div></div>
+        <div class="fi-status"><div class="fi-amount" style="color:#1E40AF">₹8,500</div><span class="badge badge-blue">Upcoming</span></div>
+      </div>
+      <div class="fee-item">
+        <div class="fi-left"><div class="fi-icon" style="background:#DCFCE7">🚌</div><div><div class="fi-name">Transport Fee</div><div class="fi-period">Monthly · July 2026</div></div></div>
+        <div class="fi-status"><div class="fi-amount" style="color:#1E40AF">₹2,200</div><span class="badge badge-blue">Upcoming</span></div>
+      </div>
+      <div style="padding:14px 18px">
+        <button class="pay-now-btn" id="payNowBtn" style="height:46px;font-size:14px">Pay ₹10,700 Early →</button>
+      </div>
+    </div>
+
+    <!-- Payment history -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Payment History</div>
+        <button style="font-size:12px;font-weight:700;color:#1E40AF;background:none;border:none;cursor:pointer">⬇ Download All</button>
+      </div>
+      <div class="hist-item">
+        <div class="hist-icon">✓</div>
+        <div><div class="hist-title">April 2026 — Full Payment</div><div class="hist-date">Apr 2, 2026 · UPI · Ref: TXN2026040201</div></div>
+        <div style="text-align:right"><div class="hist-amount">₹12,700</div><div class="hist-receipt">Download Receipt</div></div>
+      </div>
+      <div class="hist-item">
+        <div class="hist-icon">✓</div>
+        <div><div class="hist-title">January 2026 — Full Payment</div><div class="hist-date">Jan 3, 2026 · Net Banking · Ref: TXN2026010301</div></div>
+        <div style="text-align:right"><div class="hist-amount">₹12,700</div><div class="hist-receipt">Download Receipt</div></div>
+      </div>
+      <div class="hist-item">
+        <div class="hist-icon">✓</div>
+        <div><div class="hist-title">October 2025 — Full Payment</div><div class="hist-date">Oct 1, 2025 · UPI · Ref: TXN2025100101</div></div>
+        <div style="text-align:right"><div class="hist-amount">₹12,700</div><div class="hist-receipt">Download Receipt</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Payment modal -->
+  <div class="pay-modal-backdrop" id="payModal">
+    <div class="pay-modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <h3 style="font-size:18px;font-weight:800">Pay ₹10,700</h3>
+        <button id="closePayModal" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray)">✕</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray);margin-bottom:4px">July 2026 · Tuition + Transport Fee</p>
+      <div class="pay-method">
+        <div class="pm-option selected" onclick="selectMethod(this)">
+          <div class="pm-icon">📱</div>
+          <div><div class="pm-label">UPI</div><div class="pm-sub">Google Pay, PhonePe, Paytm</div></div>
+        </div>
+        <div class="pm-option" onclick="selectMethod(this)">
+          <div class="pm-icon">💳</div>
+          <div><div class="pm-label">Debit / Credit Card</div><div class="pm-sub">Visa, Mastercard, RuPay</div></div>
+        </div>
+        <div class="pm-option" onclick="selectMethod(this)">
+          <div class="pm-icon">🏦</div>
+          <div><div class="pm-label">Net Banking</div><div class="pm-sub">All major banks supported</div></div>
+        </div>
+      </div>
+      <button class="pay-now-btn" onclick="alert('Payment gateway integration required. Amount: ₹10,700')">Pay ₹10,700 Securely →</button>
+    </div>
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <a href="attendance.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="grades.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Assignments</a>
+    <a href="library.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Library</a>
+    <a href="fees.html" class="bn-item active"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Fees</a>
+  </nav>
+</div>
+<script>
+document.getElementById('payNowBtn').addEventListener('click', () => {
+  document.getElementById('payModal').classList.add('open');
+});
+document.getElementById('closePayModal').addEventListener('click', () => {
+  document.getElementById('payModal').classList.remove('open');
+});
+document.getElementById('payModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('payModal')) document.getElementById('payModal').classList.remove('open');
+});
+function selectMethod(el) {
+  document.querySelectorAll('.pm-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>
+

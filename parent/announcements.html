@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcements — EduManage Parent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#D97706; --accent-s:#FEF3C7; --accent-h:#B45309; }
+
+    .ann-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; margin-bottom:16px; }
+    .ann-item { display:flex; gap:14px; padding:16px 18px; border-bottom:1px solid var(--border); transition:background 0.15s; }
+    .ann-item:last-child { border-bottom:none; }
+    .ann-item:hover { background:var(--surface); }
+    .ann-icon { width:42px; height:42px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .ann-content { flex:1; }
+    .ann-title { font-size:14px; font-weight:700; color:var(--dark); line-height:1.4; }
+    .ann-sub   { font-size:12px; color:var(--gray); margin-top:4px; }
+    .ann-footer { display:flex; align-items:center; gap:12px; margin-top:8px; flex-wrap:wrap; }
+    .ann-tag { font-size:10px; font-weight:700; padding:2px 8px; border-radius:9999px; }
+    .ann-time { font-size:11px; color:var(--light); margin-left:auto; }
+
+    .filter-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .filter-tab { padding:7px 16px; border-radius:9999px; border:1.5px solid var(--border); background:#fff; font-size:12px; font-weight:700; color:var(--gray); cursor:pointer; transition:all 0.15s; }
+    .filter-tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon" style="background:#D97706">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </button>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mrs. Mehta</div><div class="ud-role">Parent Portal</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <div class="filter-tabs">
+      <div class="filter-tab active" data-filter="all">All</div>
+      <div class="filter-tab" data-filter="academic">Academic</div>
+      <div class="filter-tab" data-filter="event">Events</div>
+      <div class="filter-tab" data-filter="holiday">Holidays</div>
+      <div class="filter-tab" data-filter="fee">Fees</div>
+    </div>
+
+    <div class="ann-list" id="annList">
+
+      <div class="ann-card" data-category="academic">
+        <div class="ann-item">
+          <div class="ann-icon" style="background:#FEE2E2">📝</div>
+          <div class="ann-content">
+            <div class="ann-title">Unit Test — Class 10 on April 8</div>
+            <div class="ann-sub">All sections · 9:00 AM sharp · Bring pens, pencils, and erasers</div>
+            <div class="ann-footer">
+              <span class="ann-tag" style="background:#FEE2E2;color:#DC2626">Academic</span>
+              <span class="ann-tag" style="background:#DBEAFE;color:#1E40AF">Class 10</span>
+              <span class="ann-time">2 hours ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ann-card" data-category="event">
+        <div class="ann-item">
+          <div class="ann-icon" style="background:#DBEAFE">🗓</div>
+          <div class="ann-content">
+            <div class="ann-title">Parent-Teacher Meeting — April 12</div>
+            <div class="ann-sub">10:00 AM – 1:00 PM · Please carry the latest progress report</div>
+            <div class="ann-footer">
+              <span class="ann-tag" style="background:#DBEAFE;color:#1E40AF">Event</span>
+              <span class="ann-tag" style="background:#EDE9FE;color:#7C3AED">All Classes</span>
+              <span class="ann-time">Yesterday</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ann-card" data-category="holiday">
+        <div class="ann-item">
+          <div class="ann-icon" style="background:#DCFCE7">🎉</div>
+          <div class="ann-content">
+            <div class="ann-title">School Holiday — April 14</div>
+            <div class="ann-sub">Dr. Ambedkar Jayanti · No school for students</div>
+            <div class="ann-footer">
+              <span class="ann-tag" style="background:#DCFCE7;color:#16A34A">Holiday</span>
+              <span class="ann-time">2 days ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ann-card" data-category="fee">
+        <div class="ann-item">
+          <div class="ann-icon" style="background:#FEF3C7">💳</div>
+          <div class="ann-content">
+            <div class="ann-title">Fee Payment Reminder — Due April 10</div>
+            <div class="ann-sub">Outstanding fees for Term 2 must be cleared by April 10 to avoid late charges</div>
+            <div class="ann-footer">
+              <span class="ann-tag" style="background:#FEF3C7;color:#D97706">Fees</span>
+              <span class="ann-time">3 days ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ann-card" data-category="academic">
+        <div class="ann-item">
+          <div class="ann-icon" style="background:#EDE9FE">🔬</div>
+          <div class="ann-content">
+            <div class="ann-title">Science Exhibition — April 20</div>
+            <div class="ann-sub">Students of Class 9–12 can participate · Submit project titles by April 15</div>
+            <div class="ann-footer">
+              <span class="ann-tag" style="background:#EDE9FE;color:#7C3AED">Academic</span>
+              <span class="ann-tag" style="background:#DBEAFE;color:#1E40AF">Class 9–12</span>
+              <span class="ann-time">4 days ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ann-card" data-category="event">
+        <div class="ann-item">
+          <div class="ann-icon" style="background:#FCE7F3">🏃</div>
+          <div class="ann-content">
+            <div class="ann-title">Annual Sports Day — April 25</div>
+            <div class="ann-sub">All students must wear the sports uniform · Parents are invited to attend</div>
+            <div class="ann-footer">
+              <span class="ann-tag" style="background:#FCE7F3;color:#DB2777">Event</span>
+              <span class="ann-tag" style="background:#EDE9FE;color:#7C3AED">All Classes</span>
+              <span class="ann-time">5 days ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
+    <a href="attendance.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Attendance</span></a>
+    <a href="academics.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Grades</span></a>
+    <a href="fees.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>Fees</span><span class="bn-badge">!</span></a>
+    <a href="messages.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Messages</span></a>
+  </nav>
+
+</div>
+<script>
+// Filter tabs
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const filter = tab.dataset.filter;
+    document.querySelectorAll('.ann-card').forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+    });
+  });
+});
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>

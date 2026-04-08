@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parent Dashboard — EduManage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#D97706; --accent-s:#FEF3C7; --accent-h:#B45309; }
+
+    /* Attendance hero card */
+    .att-hero { border-radius:var(--radius-xl); padding:20px 24px; display:flex; align-items:center; gap:16px; margin-bottom:16px; }
+    .att-hero.present { background:linear-gradient(135deg,#16A34A,#15803D); }
+    .att-hero.absent  { background:linear-gradient(135deg,#DC2626,#B91C1C); }
+    .att-hero.late    { background:linear-gradient(135deg,#D97706,#B45309); }
+    .att-hero-icon { font-size:40px; }
+    .att-hero-title { font-size:20px; font-weight:800; color:#fff; }
+    .att-hero-sub   { font-size:13px; color:rgba(255,255,255,0.80); margin-top:3px; }
+
+    /* Child selector */
+    .child-selector { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .child-pill { display:flex; align-items:center; gap:8px; padding:8px 16px; border-radius:9999px; border:2px solid var(--border); background:#fff; cursor:pointer; font-size:13px; font-weight:600; color:var(--gray); transition:all 0.2s; }
+    .child-pill img { width:28px; height:28px; border-radius:50%; object-fit:cover; }
+    .child-pill.active { border-color:var(--accent); background:var(--accent-s); color:var(--accent); }
+
+    /* Quick actions */
+    .quick-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .quick-btn  { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px 10px; display:flex; flex-direction:column; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--dark); cursor:pointer; transition:all 0.2s; text-decoration:none; }
+    .quick-btn:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    .quick-btn-icon { font-size:24px; }
+
+    /* Grade cards */
+    .grade-cards { display:flex; flex-direction:column; gap:0; }
+    .grade-item { display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border); }
+    .grade-item:last-child { border-bottom:none; }
+    .grade-subject { flex:1; font-size:13px; font-weight:600; color:var(--dark); }
+    .grade-score   { font-size:14px; font-weight:800; }
+    .grade-bar-wrap{ flex:1.5; }
+    .grade-bar { height:6px; background:var(--surface); border-radius:9999px; overflow:hidden; }
+    .grade-fill{ height:100%; border-radius:9999px; }
+
+    /* Attendance calendar */
+    .att-calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+    .att-cal-day  { aspect-ratio:1; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; }
+    .att-cal-day.present { background:var(--accent-s); color:#16A34A; }
+    .att-cal-day.absent  { background:#FEE2E2; color:#DC2626; }
+    .att-cal-day.late    { background:#FEF3C7; color:#D97706; }
+    .att-cal-day.holiday { background:var(--surface); color:var(--light); }
+    .att-cal-day.empty   { background:transparent; }
+    .att-cal-header { font-size:10px; font-weight:700; color:var(--gray); text-align:center; padding:4px 0; }
+
+    /* Fee card */
+    .fee-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); padding:20px; }
+    .fee-amount { font-size:32px; font-weight:800; margin:8px 0; }
+    .fee-amount.overdue { color:#DC2626; }
+    .fee-amount.paid    { color:#16A34A; }
+    .fee-items { display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+    .fee-item  { display:flex; justify-content:space-between; font-size:13px; }
+    .fee-item-label { color:var(--gray); }
+    .fee-item-val   { font-weight:700; color:var(--dark); }
+    .pay-btn { width:100%; height:48px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius-md); font-size:15px; font-weight:700; cursor:pointer; transition:filter 0.2s; }
+    .pay-btn:hover { filter:brightness(1.08); }
+
+    /* Bus card */
+    .bus-card { background:linear-gradient(135deg,#1E40AF,#0EA5E9); border-radius:var(--radius-xl); padding:20px; color:#fff; }
+    .bus-eta  { font-size:28px; font-weight:800; margin:8px 0 4px; }
+    .bus-route{ font-size:13px; opacity:0.80; }
+    .bus-map-placeholder { background:rgba(255,255,255,0.12); border-radius:var(--radius-lg); height:100px; margin-top:12px; display:flex; align-items:center; justify-content:center; font-size:13px; opacity:0.7; }
+    .bus-stops { display:flex; flex-direction:column; gap:6px; margin-top:12px; }
+    .bus-stop  { display:flex; align-items:center; gap:8px; font-size:12px; }
+    .bus-stop-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+    /* Announcements */
+    .ann-item { display:flex; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border); }
+    .ann-item:last-child { border-bottom:none; }
+    .ann-dot  { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+    .ann-title{ font-size:13px; font-weight:600; color:var(--dark); }
+    .ann-sub  { font-size:11px; color:var(--gray); margin-top:2px; }
+    .ann-time { font-size:11px; color:var(--light); white-space:nowrap; }
+
+    @media(max-width:768px){ .quick-grid { grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon" style="background:#D97706">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-badge">3</span>
+    </button>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mrs. Mehta</div><div class="ud-role">Parent Portal</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <!-- Greeting -->
+    <div class="greeting-header" style="background:linear-gradient(135deg,#D97706,#B45309)">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&crop=face" alt="Parent" class="gh-avatar" />
+      <div>
+        <div class="gh-greeting">Good morning, Mrs. Mehta 👪</div>
+        <div class="gh-sub">Tuesday, April 4, 2026 · Parent Portal</div>
+      </div>
+    </div>
+
+    <!-- Child selector -->
+    <div class="child-selector">
+      <div class="child-pill active">
+        <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=40&h=40&fit=crop&crop=face" alt="Raju" />
+        Raju · Class 10A
+      </div>
+      <div class="child-pill">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt="Priya" />
+        Priya · Class 7B
+      </div>
+    </div>
+
+    <!-- Attendance hero -->
+    <div class="att-hero present">
+      <div class="att-hero-icon">✅</div>
+      <div>
+        <div class="att-hero-title">Raju is Present Today</div>
+        <div class="att-hero-sub">Arrived at school · 8:47 AM · Tuesday, April 4</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:28px;font-weight:800;color:#fff">94%</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.75)">This month</div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="section-label">Quick Actions</div>
+    <div class="quick-grid" style="margin-bottom:20px">
+      <a href="fees.html" class="quick-btn"><div class="quick-btn-icon">💳</div>Pay Fee</a>
+      <a href="messages.html" class="quick-btn"><div class="quick-btn-icon">💬</div>Message Teacher</a>
+      <a href="bus.html" class="quick-btn"><div class="quick-btn-icon">🚌</div>Track Bus</a>
+      <a href="academics.html" class="quick-btn"><div class="quick-btn-icon">📊</div>View Grades</a>
+    </div>
+
+    <!-- Main grid -->
+    <div class="dash-grid">
+
+      <!-- LEFT column -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Fee status -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Fee Status</div>
+            <span class="badge badge-red">Due in 3 days</span>
+          </div>
+          <div class="card-body">
+            <div class="fee-card" style="border:none;padding:0">
+              <div style="font-size:13px;color:var(--gray)">Outstanding Amount</div>
+              <div class="fee-amount overdue">₹5,400</div>
+              <div class="fee-items">
+                <div class="fee-item"><span class="fee-item-label">Tuition Fee (Apr)</span><span class="fee-item-val">₹3,200</span></div>
+                <div class="fee-item"><span class="fee-item-label">Transport Fee</span><span class="fee-item-val">₹1,400</span></div>
+                <div class="fee-item"><span class="fee-item-label">Activity Fee</span><span class="fee-item-val">₹800</span></div>
+              </div>
+              <button class="pay-btn">Pay ₹5,400 Now →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grades -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Latest Grades — Term 2</div>
+            <a href="academics.html" class="btn-link">View all →</a>
+          </div>
+          <div class="grade-cards" id="gradeCards"></div>
+        </div>
+
+        <!-- Announcements -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">School Announcements</div>
+            <a href="announcements.html" class="btn-link">View all →</a>
+          </div>
+          <div id="annList"></div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT column -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Attendance calendar -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">April Attendance</div>
+            <div style="display:flex;gap:8px;font-size:11px">
+              <span style="color:#16A34A">● Present</span>
+              <span style="color:#DC2626">● Absent</span>
+              <span style="color:#D97706">● Late</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="att-calendar" id="attCalendar"></div>
+            <div style="display:flex;justify-content:space-around;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+              <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:#16A34A">18</div><div style="font-size:11px;color:var(--gray)">Present</div></div>
+              <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:#DC2626">1</div><div style="font-size:11px;color:var(--gray)">Absent</div></div>
+              <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:#D97706">1</div><div style="font-size:11px;color:var(--gray)">Late</div></div>
+              <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--gray)">4</div><div style="font-size:11px;color:var(--gray)">Holidays</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bus tracking -->
+        <div class="bus-card">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-size:12px;opacity:0.75;font-weight:600;text-transform:uppercase;letter-spacing:0.5px">🚌 Bus Tracking</div>
+              <div class="bus-eta">8 mins away</div>
+              <div class="bus-route">Route 4B · Bus KA-01-AB-1234</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:11px;opacity:0.7">Driver</div>
+              <div style="font-size:13px;font-weight:700">Ramesh Kumar</div>
+              <a href="tel:+919876543210" style="font-size:12px;color:rgba(255,255,255,0.8);display:block;margin-top:2px">📞 Call Driver</a>
+            </div>
+          </div>
+          <div class="bus-map-placeholder">🗺 Live map — tap to open full view</div>
+          <div class="bus-stops">
+            <div class="bus-stop"><div class="bus-stop-dot" style="background:#4ADE80"></div><span>School Gate — Departed 3:45 PM</span></div>
+            <div class="bus-stop"><div class="bus-stop-dot" style="background:#FCD34D"></div><span>MG Road Stop — 3:52 PM (next)</span></div>
+            <div class="bus-stop"><div class="bus-stop-dot" style="background:rgba(255,255,255,0.3)"></div><span>Your Stop — ETA 4:05 PM</span></div>
+          </div>
+        </div>
+
+        <!-- Teacher message -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Messages</div>
+            <a href="messages.html" class="btn-link">Open →</a>
+          </div>
+          <div style="padding:16px 18px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=40&h=40&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0" alt="Teacher" />
+              <div style="background:var(--surface);border-radius:0 12px 12px 12px;padding:10px 12px;flex:1">
+                <div style="font-size:11px;font-weight:700;color:var(--gray);margin-bottom:4px">Rajesh Kumar · Maths</div>
+                <div style="font-size:13px;color:var(--dark)">Raju performed well in today's test. Please ensure he completes the homework by Friday.</div>
+                <div style="font-size:10px;color:var(--light);margin-top:4px">Today, 2:30 PM</div>
+              </div>
+            </div>
+            <a href="messages.html" class="btn" style="background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);padding:10px;text-align:center;font-size:13px;font-weight:700;display:block">Reply to Teacher</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
+    <a href="attendance.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Attendance</span></a>
+    <a href="academics.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Grades</span></a>
+    <a href="fees.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>Fees</span><span class="bn-badge">!</span></a>
+    <a href="messages.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Messages</span></a>
+  </nav>
+
+</div>
+
+<script>
+// Child selector
+document.querySelectorAll('.child-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.child-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+
+// Grades
+const grades = [
+  { subject:'Mathematics', score:92, max:100, color:'#16A34A' },
+  { subject:'Science',     score:88, max:100, color:'#1E40AF' },
+  { subject:'English',     score:85, max:100, color:'#7C3AED' },
+  { subject:'Social Stud.',score:79, max:100, color:'#D97706' },
+  { subject:'Hindi',       score:91, max:100, color:'#0EA5E9' },
+];
+const gradeCards = document.getElementById('gradeCards');
+grades.forEach(g => {
+  gradeCards.innerHTML += `
+    <div class="grade-item">
+      <div class="grade-subject">${g.subject}</div>
+      <div class="grade-bar-wrap">
+        <div class="grade-bar"><div class="grade-fill" style="width:${g.score}%;background:${g.color}"></div></div>
+      </div>
+      <div class="grade-score" style="color:${g.color}">${g.score}%</div>
+    </div>`;
+});
+
+// Attendance calendar
+const calEl = document.getElementById('attCalendar');
+const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+days.forEach(d => { calEl.innerHTML += `<div class="att-cal-header">${d}</div>`; });
+// April 2026 starts on Wednesday (index 3)
+for(let i=0;i<3;i++) calEl.innerHTML += `<div class="att-cal-day empty"></div>`;
+const statuses = ['present','present','present','holiday','holiday','present','present','present','present','present','holiday','holiday','present','present','present','present','present','holiday','holiday','present','present','present','present','present','holiday','holiday','absent','late','present'];
+statuses.forEach((s,i) => {
+  calEl.innerHTML += `<div class="att-cal-day ${s}" title="${s}">${i+1}</div>`;
+});
+
+// Announcements
+const anns = [
+  { color:'#DC2626', title:'Unit Test — Class 10 on April 8', sub:'All sections · 9:00 AM', time:'2 hrs ago' },
+  { color:'#1E40AF', title:'Parent-Teacher Meeting — April 12', sub:'10:00 AM – 1:00 PM', time:'Yesterday' },
+  { color:'#D97706', title:'School Holiday — April 14', sub:'Dr. Ambedkar Jayanti', time:'2 days ago' },
+];
+const annList = document.getElementById('annList');
+anns.forEach(a => {
+  annList.innerHTML += `
+    <div class="ann-item">
+      <div class="ann-dot" style="background:${a.color}"></div>
+      <div style="flex:1"><div class="ann-title">${a.title}</div><div class="ann-sub">${a.sub}</div></div>
+      <div class="ann-time">${a.time}</div>
+    </div>`;
+});
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>

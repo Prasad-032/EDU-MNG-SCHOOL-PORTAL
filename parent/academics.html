@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academics — EduManage Parent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#D97706; --accent-s:#FEF3C7; --accent-h:#B45309; }
+
+    .exam-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .exam-tab { padding:8px 18px; border-radius:9999px; border:1.5px solid var(--border); background:#fff; font-size:13px; font-weight:700; color:var(--gray); cursor:pointer; transition:all 0.2s; }
+    .exam-tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+    .grade-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+    .gs-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; text-align:center; box-shadow:var(--shadow-sm); }
+    .gs-num   { font-size:28px; font-weight:800; line-height:1; }
+    .gs-label { font-size:12px; color:var(--gray); margin-top:4px; }
+
+    .subject-grades { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .sg-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; box-shadow:var(--shadow-sm); transition:all 0.2s; }
+    .sg-card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+    .sg-header { padding:14px 18px; display:flex; align-items:center; gap:10px; }
+    .sg-dot    { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .sg-subject{ font-size:15px; font-weight:800; color:var(--dark); flex:1; }
+    .sg-grade  { font-size:22px; font-weight:900; }
+    .sg-body   { padding:0 18px 16px; }
+    .sg-bar    { height:8px; background:var(--surface); border-radius:9999px; overflow:hidden; margin-bottom:10px; }
+    .sg-fill   { height:100%; border-radius:9999px; }
+    .sg-row    { display:flex; justify-content:space-between; font-size:12px; color:var(--gray); margin-bottom:4px; }
+    .sg-row span:last-child { font-weight:700; color:var(--dark); }
+    .sg-teacher{ display:flex; align-items:center; gap:8px; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); font-size:12px; color:var(--gray); }
+    .sg-teacher img { width:24px; height:24px; border-radius:50%; object-fit:cover; }
+
+    .recent-tests { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; margin-top:16px; }
+    .rt-header { padding:14px 18px; border-bottom:1px solid var(--border); font-size:14px; font-weight:700; }
+    .rt-item { display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border); }
+    .rt-item:last-child { border-bottom:none; }
+    .rt-icon { width:36px; height:36px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .rt-info { flex:1; }
+    .rt-name { font-size:13px; font-weight:700; color:var(--dark); }
+    .rt-sub  { font-size:11px; color:var(--gray); }
+    .rt-score { font-size:18px; font-weight:800; }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon" style="background:#D97706">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </button>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mrs. Mehta</div><div class="ud-role">Parent Portal</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <!-- Child selector -->
+    <div class="child-selector" style="margin-bottom:20px">
+      <div class="child-pill active">
+        <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=40&h=40&fit=crop&crop=face" alt="Raju" />
+        Raju · Class 10A
+      </div>
+      <div class="child-pill">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt="Priya" />
+        Priya · Class 7B
+      </div>
+    </div>
+
+    <!-- Exam term selector -->
+    <div class="exam-tabs">
+      <div class="exam-tab active">Term 2 — Current</div>
+      <div class="exam-tab">Term 1</div>
+      <div class="exam-tab">Final 2025</div>
+    </div>
+
+    <!-- Summary -->
+    <div class="grade-summary">
+      <div class="gs-card"><div class="gs-num" style="color:#16A34A">87%</div><div class="gs-label">Overall Average</div></div>
+      <div class="gs-card"><div class="gs-num" style="color:#1E40AF">A</div><div class="gs-label">Grade</div></div>
+      <div class="gs-card"><div class="gs-num" style="color:#16A34A">3rd</div><div class="gs-label">Class Rank</div></div>
+      <div class="gs-card"><div class="gs-num" style="color:#7C3AED">45/50</div><div class="gs-label">Attendance</div></div>
+    </div>
+
+    <!-- Subject grades -->
+    <div class="subject-grades">
+      <div class="sg-card">
+        <div class="sg-header">
+          <div class="sg-dot" style="background:#16A34A"></div>
+          <div class="sg-subject">Mathematics</div>
+          <div class="sg-grade" style="color:#16A34A">A+</div>
+        </div>
+        <div class="sg-body">
+          <div class="sg-bar"><div class="sg-fill" style="width:92%;background:#16A34A"></div></div>
+          <div class="sg-row"><span>Score</span><span>92/100</span></div>
+          <div class="sg-row"><span>Class avg</span><span>78/100</span></div>
+          <div class="sg-row"><span>Trend</span><span style="color:#16A34A">↑ Improving</span></div>
+          <div class="sg-teacher">
+            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=40&h=40&fit=crop&crop=face" alt="Teacher" />
+            Rajesh Kumar
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-card">
+        <div class="sg-header">
+          <div class="sg-dot" style="background:#1E40AF"></div>
+          <div class="sg-subject">Science</div>
+          <div class="sg-grade" style="color:#1E40AF">A</div>
+        </div>
+        <div class="sg-body">
+          <div class="sg-bar"><div class="sg-fill" style="width:88%;background:#1E40AF"></div></div>
+          <div class="sg-row"><span>Score</span><span>88/100</span></div>
+          <div class="sg-row"><span>Class avg</span><span>74/100</span></div>
+          <div class="sg-row"><span>Trend</span><span style="color:#16A34A">↑ Improving</span></div>
+          <div class="sg-teacher">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=40&h=40&fit=crop&crop=face" alt="Teacher" />
+            Priya Sharma
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-card">
+        <div class="sg-header">
+          <div class="sg-dot" style="background:#7C3AED"></div>
+          <div class="sg-subject">English</div>
+          <div class="sg-grade" style="color:#7C3AED">A</div>
+        </div>
+        <div class="sg-body">
+          <div class="sg-bar"><div class="sg-fill" style="width:85%;background:#7C3AED"></div></div>
+          <div class="sg-row"><span>Score</span><span>85/100</span></div>
+          <div class="sg-row"><span>Class avg</span><span>76/100</span></div>
+          <div class="sg-row"><span>Trend</span><span style="color:#D97706">→ Stable</span></div>
+          <div class="sg-teacher">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Teacher" />
+            Amit Verma
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-card">
+        <div class="sg-header">
+          <div class="sg-dot" style="background:#D97706"></div>
+          <div class="sg-subject">Social Studies</div>
+          <div class="sg-grade" style="color:#D97706">B+</div>
+        </div>
+        <div class="sg-body">
+          <div class="sg-bar"><div class="sg-fill" style="width:79%;background:#D97706"></div></div>
+          <div class="sg-row"><span>Score</span><span>79/100</span></div>
+          <div class="sg-row"><span>Class avg</span><span>72/100</span></div>
+          <div class="sg-row"><span>Trend</span><span style="color:#DC2626">↓ Needs attention</span></div>
+          <div class="sg-teacher">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=40&h=40&fit=crop&crop=face" alt="Teacher" />
+            Sunita Nair
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-card">
+        <div class="sg-header">
+          <div class="sg-dot" style="background:#0EA5E9"></div>
+          <div class="sg-subject">Hindi</div>
+          <div class="sg-grade" style="color:#0EA5E9">A+</div>
+        </div>
+        <div class="sg-body">
+          <div class="sg-bar"><div class="sg-fill" style="width:91%;background:#0EA5E9"></div></div>
+          <div class="sg-row"><span>Score</span><span>91/100</span></div>
+          <div class="sg-row"><span>Class avg</span><span>80/100</span></div>
+          <div class="sg-row"><span>Trend</span><span style="color:#16A34A">↑ Improving</span></div>
+        </div>
+      </div>
+
+      <div class="sg-card">
+        <div class="sg-header">
+          <div class="sg-dot" style="background:#EC4899"></div>
+          <div class="sg-subject">Computer Science</div>
+          <div class="sg-grade" style="color:#EC4899">A</div>
+        </div>
+        <div class="sg-body">
+          <div class="sg-bar"><div class="sg-fill" style="width:87%;background:#EC4899"></div></div>
+          <div class="sg-row"><span>Score</span><span>87/100</span></div>
+          <div class="sg-row"><span>Class avg</span><span>75/100</span></div>
+          <div class="sg-row"><span>Trend</span><span style="color:#16A34A">↑ Improving</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent tests -->
+    <div class="recent-tests">
+      <div class="rt-header">Recent Test Scores</div>
+      <div class="rt-item">
+        <div class="rt-icon" style="background:#DBEAFE">📐</div>
+        <div class="rt-info"><div class="rt-name">Unit Test 3 — Mathematics</div><div class="rt-sub">April 3, 2026 · Max: 50</div></div>
+        <div class="rt-score" style="color:#16A34A">46</div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-icon" style="background:#EDE9FE">🧪</div>
+        <div class="rt-info"><div class="rt-name">Physics Lab Test — Science</div><div class="rt-sub">April 1, 2026 · Max: 30</div></div>
+        <div class="rt-score" style="color:#1E40AF">27</div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-icon" style="background:#FEF3C7">📖</div>
+        <div class="rt-info"><div class="rt-name">Essay Writing — English</div><div class="rt-sub">March 28, 2026 · Max: 25</div></div>
+        <div class="rt-score" style="color:#7C3AED">22</div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-icon" style="background:#FEE2E2">📜</div>
+        <div class="rt-info"><div class="rt-name">History Chapter 5 — Social Studies</div><div class="rt-sub">March 25, 2026 · Max: 40</div></div>
+        <div class="rt-score" style="color:#D97706">31</div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
+    <a href="attendance.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Attendance</span></a>
+    <a href="academics.html" class="bn-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Grades</span></a>
+    <a href="fees.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>Fees</span><span class="bn-badge">!</span></a>
+    <a href="messages.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Messages</span></a>
+  </nav>
+
+</div>
+<script>
+// Child selector
+document.querySelectorAll('.child-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.child-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+
+// Exam tabs
+document.querySelectorAll('.exam-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.exam-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>

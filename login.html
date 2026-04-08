@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — EduManage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+
+  <div class="login-page">
+
+    <!-- ===== LEFT PANEL ===== -->
+    <div class="lp-left">
+
+      <!-- Background photo changes per role -->
+      <div class="lp-bg" id="lpBg">
+        <img id="lpBgImg"
+          src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=900&h=1200&fit=crop&crop=center"
+          alt="School" />
+        <div class="lp-bg-tint" id="lpBgTint"></div>
+      </div>
+
+      <!-- Logo -->
+      <a href="index.html" class="lp-logo">
+        <div class="lp-logo-icon">E</div>
+        <span>EduManage</span>
+      </a>
+
+      <!-- Role quote card -->
+      <div class="lp-quote-wrap">
+        <div class="lp-quote" id="lpQuote">
+          <div class="lp-quote-stars">★★★★★</div>
+          <p id="lpQuoteText">"EduManage transformed how we run our school. Fee collection that used to take 3 days now takes 3 hours."</p>
+          <div class="lp-quote-author">
+            <img id="lpQuoteAvatar"
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=56&h=56&fit=crop&crop=face"
+              alt="Priya Nair" />
+            <div>
+              <div class="lp-quote-name" id="lpQuoteName">Priya Nair</div>
+              <div class="lp-quote-role" id="lpQuoteRole">Principal, Delhi Public School</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating stat pills -->
+        <div class="lp-stat-pills">
+          <div class="lp-pill" id="lpPill1">
+            <span class="lp-pill-icon">🎓</span>
+            <span id="lpPillText1">1,248 Students</span>
+          </div>
+          <div class="lp-pill" id="lpPill2">
+            <span class="lp-pill-icon">✅</span>
+            <span id="lpPillText2">94% Attendance</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== RIGHT PANEL ===== -->
+    <div class="lp-right">
+
+      <div class="lp-form-wrap">
+
+        <!-- Header -->
+        <div class="lp-form-header">
+          <h1>Welcome back</h1>
+          <p>Sign in to your EduManage portal</p>
+        </div>
+
+        <!-- Role selector -->
+        <div class="lp-roles" id="lpRoles">
+          <button class="lp-role active" data-role="admin"
+            data-color="#7C3AED" data-bg="#EDE9FE"
+            data-img="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&h=1200&fit=crop&crop=top"
+            data-tint="rgba(30,10,70,0.82)"
+            data-quote="Fee collection that used to take 3 days now takes 3 hours."
+            data-author="Priya Nair" data-arole="Principal, Delhi Public School"
+            data-avatar="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=56&h=56&fit=crop&crop=face"
+            data-p1="1,248 Students" data-p2="94% Attendance">
+            <span class="lp-role-icon">🏫</span>
+            <span>Admin</span>
+          </button>
+          <button class="lp-role" data-role="teacher"
+            data-color="#16A34A" data-bg="#DCFCE7"
+            data-img="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&h=1200&fit=crop&crop=top"
+            data-tint="rgba(5,40,20,0.82)"
+            data-quote="Marking attendance used to take 10 minutes. Now it's 45 seconds. I actually have time to teach."
+            data-author="Rajesh Kumar" data-arole="Mathematics Teacher, 8 years"
+            data-avatar="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=56&h=56&fit=crop&crop=face"
+            data-p1="3 Classes Today" data-p2="42 Students">
+            <span class="lp-role-icon">👩‍🏫</span>
+            <span>Teacher</span>
+          </button>
+          <button class="lp-role" data-role="student"
+            data-color="#1E40AF" data-bg="#DBEAFE"
+            data-img="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&h=1200&fit=crop&crop=top"
+            data-tint="rgba(10,20,80,0.82)"
+            data-quote="I check my grades and timetable before breakfast every day. It's so easy to use."
+            data-author="Raju Sharma" data-arole="Class 10 Student"
+            data-avatar="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=56&h=56&fit=crop&crop=face"
+            data-p1="87% Attendance" data-p2="3 Assignments Due">
+            <span class="lp-role-icon">🎓</span>
+            <span>Student</span>
+          </button>
+          <button class="lp-role" data-role="parent"
+            data-color="#D97706" data-bg="#FEF3C7"
+            data-img="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=900&h=1200&fit=crop&crop=top"
+            data-tint="rgba(60,30,5,0.82)"
+            data-quote="I can see my son's attendance and grades in real time. The bus tracking gives me peace of mind."
+            data-author="Sunita Mehta" data-arole="Parent of Class 7 student"
+            data-avatar="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=56&h=56&fit=crop&crop=face"
+            data-p1="Raju — Present ✓" data-p2="Bus: 8 mins away">
+            <span class="lp-role-icon">👪</span>
+            <span>Parent</span>
+          </button>
+        </div>
+
+        <!-- Form -->
+        <form class="lp-form" id="lpForm" novalidate>
+
+          <div class="lp-field">
+            <label for="email">Email Address</label>
+            <div class="lp-input-wrap">
+              <svg class="lp-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              <input type="email" id="email" name="email" placeholder="you@school.edu" autocomplete="email" />
+            </div>
+            <span class="lp-error" id="emailError"></span>
+          </div>
+
+          <div class="lp-field">
+            <label for="password">Password</label>
+            <div class="lp-input-wrap">
+              <svg class="lp-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" />
+              <button type="button" class="lp-eye" id="lpEye" aria-label="Toggle password">
+                <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="lp-error" id="passwordError"></span>
+          </div>
+
+          <div class="lp-row">
+            <label class="lp-checkbox">
+              <input type="checkbox" id="remember" />
+              <span class="lp-checkmark"></span>
+              Remember me
+            </label>
+            <a href="forgot-password.html" class="lp-forgot">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="lp-submit" id="lpSubmit">
+            <span id="lpSubmitText">Sign In</span>
+            <div class="lp-spinner" id="lpSpinner"></div>
+          </button>
+
+          <div class="lp-divider"><span>or continue with</span></div>
+
+          <div class="lp-sso">
+            <button type="button" class="lp-sso-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Google
+            </button>
+            <button type="button" class="lp-sso-btn">
+              <svg width="18" height="18" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="10" height="10" fill="#F25022"/>
+                <rect x="11" y="0" width="10" height="10" fill="#7FBA00"/>
+                <rect x="0" y="11" width="10" height="10" fill="#00A4EF"/>
+                <rect x="11" y="11" width="10" height="10" fill="#FFB900"/>
+              </svg>
+              Microsoft
+            </button>
+          </div>
+
+        </form>
+
+        <p class="lp-signup">Don't have an account? <a href="contact.html">Contact your school admin</a></p>
+
+        <div style="margin-top:16px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;font-size:12px;color:#64748B;line-height:1.6">
+          <strong style="color:#1E293B">Demo credentials</strong> — use any email &amp; password (6+ chars) to log in. Role selector above determines which portal opens. <a href="portals.html" style="color:#1E40AF;font-weight:700">Browse all pages →</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

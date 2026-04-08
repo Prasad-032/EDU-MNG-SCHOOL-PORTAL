@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard — EduManage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    /* Override accent to blue for student portal */
+    :root {
+      --accent: #1E40AF !important;
+      --accent-s: #DBEAFE !important;
+      --accent-h: #1D3588 !important;
+    }
+
+    /* Fix greeting header — use photo bg instead of gradient */
+    .greeting-header {
+      background: none !important;
+      padding: 0 !important;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      min-height: 150px;
+      display: flex;
+      align-items: flex-end !important;
+      margin-bottom: 20px;
+    }
+    .gh-bg { position: absolute; inset: 0; }
+    .gh-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+    .gh-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(10,20,80,0.90) 0%, rgba(10,20,80,0.65) 55%, rgba(10,20,80,0.25) 100%);
+    }
+    .gh-content {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 24px; width: 100%;
+    }
+    .gh-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.5); flex-shrink: 0; }
+    .gh-name   { font-size: 19px; font-weight: 800; color: #fff; }
+    .gh-sub    { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 3px; }
+    .gh-stats  { margin-left: auto; display: flex; gap: 20px; }
+    .gh-stat   { text-align: center; }
+    .gh-stat-n { font-size: 20px; font-weight: 800; color: #fff; line-height: 1; }
+    .gh-stat-l { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.4px; }
+
+    /* Stat cards with icon */
+    .stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+    .stat-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 12px; }
+    .sc-icon  { width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .sc-num   { font-size: 20px; font-weight: 800; line-height: 1; }
+    .sc-label { font-size: 11px; color: var(--gray); margin-top: 3px; }
+
+    /* 2-col dashboard grid */
+    .dash-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
+
+    /* Timetable list items */
+    .tt-list { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; }
+    .tt-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: var(--radius-md);
+      background: var(--surface); border-left: 3px solid transparent;
+      transition: background 0.2s;
+    }
+    .tt-item.now { background: #EFF6FF; border-left-color: #1E40AF; }
+    .tt-dot    { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .tt-subject{ font-size: 13px; font-weight: 700; color: var(--dark); }
+    .tt-meta   { font-size: 11px; color: var(--gray); margin-top: 1px; }
+    .tt-time   { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--gray); white-space: nowrap; }
+    .tt-now-badge { background: #1E40AF; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 9999px; margin-left: 6px; }
+
+    /* Grades */
+    .grade-row { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-bottom: 1px solid var(--border); }
+    .grade-row:last-child { border-bottom: none; }
+    .grade-subject { font-size: 13px; font-weight: 600; color: var(--dark); min-width: 100px; }
+    .grade-bar-wrap { flex: 1; }
+    .grade-bar  { height: 7px; background: var(--surface); border-radius: 9999px; overflow: hidden; }
+    .grade-fill { height: 100%; border-radius: 9999px; }
+    .grade-score{ font-size: 13px; font-weight: 800; min-width: 38px; text-align: right; }
+    .grade-chip { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 9999px; min-width: 30px; text-align: center; }
+
+    /* Attendance SVG ring */
+    .att-ring-wrap { display: flex; flex-direction: column; align-items: center; padding: 12px 0 6px; }
+    .att-mini-row  { display: flex; justify-content: space-around; padding: 8px 18px 12px; }
+    .att-mini      { text-align: center; }
+    .att-mini-n    { font-size: 16px; font-weight: 800; }
+    .att-mini-l    { font-size: 10px; color: var(--gray); margin-top: 2px; }
+    .att-warning   { margin: 0 14px 12px; padding: 8px 12px; background: #FEF3C7; border-radius: var(--radius-md); font-size: 12px; color: #D97706; font-weight: 600; }
+
+    /* Assignments */
+    .assign-item { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--border); }
+    .assign-item:last-child { border-bottom: none; }
+    .assign-icon { width: 36px; height: 36px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .assign-title { font-size: 13px; font-weight: 600; color: var(--dark); }
+    .assign-sub   { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+    /* Fee card */
+    .fee-card { border-radius: var(--radius-lg); padding: 16px 18px; color: #fff; }
+    .fee-card.paid { background: linear-gradient(135deg,#16A34A,#15803D); }
+    .fee-card.due  { background: linear-gradient(135deg,#DC2626,#B91C1C); }
+    .fee-card-label  { font-size: 11px; opacity: 0.8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+    .fee-card-amount { font-size: 24px; font-weight: 800; margin: 4px 0; }
+    .fee-card-sub    { font-size: 12px; opacity: 0.8; }
+
+    /* Bottom nav */
+    .bottom-nav { display: flex !important; }
+    .bn-item { color: var(--gray); text-decoration: none; }
+
+    @media(max-width: 900px) {
+      .dash-grid { grid-template-columns: 1fr; }
+      .stat-row  { grid-template-columns: 1fr 1fr; }
+      .gh-stats  { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="topbar-logo-icon" style="background:#1E40AF">E</div>
+      EduManage
+    </div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-badge">2</span>
+    </button>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Raju Sharma</div><div class="ud-role">Student · Class 10A</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <!-- GREETING -->
+    <div class="greeting-header">
+      <div class="gh-bg">
+        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1000&h=300&fit=crop&crop=center" alt="Classroom" />
+      </div>
+      <div class="gh-content">
+        <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=80&h=80&fit=crop&crop=face" alt="Raju" class="gh-avatar" />
+        <div>
+          <div class="gh-name">Good morning, Raju! 🎓</div>
+          <div class="gh-sub">Class 10A · Roll No. 12 · Tuesday, April 4, 2026</div>
+        </div>
+        <div class="gh-stats">
+          <div class="gh-stat"><div class="gh-stat-n">87%</div><div class="gh-stat-l">Attendance</div></div>
+          <div class="gh-stat"><div class="gh-stat-n">A</div><div class="gh-stat-l">Avg Grade</div></div>
+          <div class="gh-stat"><div class="gh-stat-n">3</div><div class="gh-stat-l">Due Today</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="sc-icon" style="background:#DBEAFE">✅</div>
+        <div><div class="sc-num" style="color:#1E40AF">87%</div><div class="sc-label">Attendance</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon" style="background:#DCFCE7">📊</div>
+        <div><div class="sc-num" style="color:#16A34A">92/100</div><div class="sc-label">Last Maths Score</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon" style="background:#FEF3C7">📝</div>
+        <div><div class="sc-num" style="color:#D97706">3</div><div class="sc-label">Assignments Due</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon" style="background:#DCFCE7">💳</div>
+        <div><div class="sc-num" style="color:#16A34A">Paid</div><div class="sc-label">Fee Status</div></div>
+      </div>
+    </div>
+
+    <!-- MAIN 2-COL GRID -->
+    <div class="dash-grid">
+
+      <!-- LEFT -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Today's Schedule -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📅 Today's Schedule</div>
+            <a href="timetable.html" style="font-size:12px;font-weight:700;color:#1E40AF">Full Week →</a>
+          </div>
+          <div class="tt-list">
+            <div class="tt-item now">
+              <div class="tt-dot" style="background:#1E40AF"></div>
+              <div style="flex:1">
+                <div class="tt-subject">Mathematics <span class="tt-now-badge">NOW</span></div>
+                <div class="tt-meta">Room 301 · Mr. Rajesh Kumar</div>
+              </div>
+              <div class="tt-time">9:00 AM</div>
+            </div>
+            <div class="tt-item">
+              <div class="tt-dot" style="background:#16A34A"></div>
+              <div style="flex:1">
+                <div class="tt-subject">Science</div>
+                <div class="tt-meta">Lab 1 · Ms. Priya Sharma</div>
+              </div>
+              <div class="tt-time">10:00 AM</div>
+            </div>
+            <div class="tt-item">
+              <div class="tt-dot" style="background:#7C3AED"></div>
+              <div style="flex:1">
+                <div class="tt-subject">English</div>
+                <div class="tt-meta">Room 301 · Mr. Amit Verma</div>
+              </div>
+              <div class="tt-time">11:00 AM</div>
+            </div>
+            <div class="tt-item">
+              <div class="tt-dot" style="background:#D97706"></div>
+              <div style="flex:1">
+                <div class="tt-subject">Social Studies</div>
+                <div class="tt-meta">Room 301 · Ms. Sunita Nair</div>
+              </div>
+              <div class="tt-time">1:00 PM</div>
+            </div>
+            <div class="tt-item">
+              <div class="tt-dot" style="background:#0EA5E9"></div>
+              <div style="flex:1">
+                <div class="tt-subject">Computer Science</div>
+                <div class="tt-meta">Lab 2 · Mr. Amit Sharma</div>
+              </div>
+              <div class="tt-time">2:00 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grades -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📊 Recent Grades — Term 2</div>
+            <a href="grades.html" style="font-size:12px;font-weight:700;color:#1E40AF">View All →</a>
+          </div>
+          <div class="grade-row">
+            <span class="grade-subject">Mathematics</span>
+            <div class="grade-bar-wrap"><div class="grade-bar"><div class="grade-fill" style="width:92%;background:#16A34A"></div></div></div>
+            <span class="grade-score" style="color:#16A34A">92%</span>
+            <span class="grade-chip" style="background:#DCFCE7;color:#16A34A">A+</span>
+          </div>
+          <div class="grade-row">
+            <span class="grade-subject">Science</span>
+            <div class="grade-bar-wrap"><div class="grade-bar"><div class="grade-fill" style="width:88%;background:#1E40AF"></div></div></div>
+            <span class="grade-score" style="color:#1E40AF">88%</span>
+            <span class="grade-chip" style="background:#DBEAFE;color:#1E40AF">A</span>
+          </div>
+          <div class="grade-row">
+            <span class="grade-subject">English</span>
+            <div class="grade-bar-wrap"><div class="grade-bar"><div class="grade-fill" style="width:79%;background:#7C3AED"></div></div></div>
+            <span class="grade-score" style="color:#7C3AED">79%</span>
+            <span class="grade-chip" style="background:#EDE9FE;color:#7C3AED">B+</span>
+          </div>
+          <div class="grade-row">
+            <span class="grade-subject">Social Studies</span>
+            <div class="grade-bar-wrap"><div class="grade-bar"><div class="grade-fill" style="width:85%;background:#D97706"></div></div></div>
+            <span class="grade-score" style="color:#D97706">85%</span>
+            <span class="grade-chip" style="background:#FEF3C7;color:#D97706">A</span>
+          </div>
+          <div class="grade-row">
+            <span class="grade-subject">Computer Sc.</span>
+            <div class="grade-bar-wrap"><div class="grade-bar"><div class="grade-fill" style="width:95%;background:#0EA5E9"></div></div></div>
+            <span class="grade-score" style="color:#0EA5E9">95%</span>
+            <span class="grade-chip" style="background:#E0F2FE;color:#0EA5E9">A+</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Attendance -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">✅ Attendance — April</div>
+            <a href="attendance.html" style="font-size:12px;font-weight:700;color:#1E40AF">Details →</a>
+          </div>
+          <div class="att-ring-wrap">
+            <svg width="110" height="110" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#E2E8F0" stroke-width="12"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#1E40AF" stroke-width="12"
+                stroke-dasharray="274" stroke-dashoffset="35"
+                stroke-linecap="round" transform="rotate(-90 60 60)"/>
+              <text x="60" y="56" text-anchor="middle" font-size="18" font-weight="800" fill="#1E293B" font-family="Inter,sans-serif">87%</text>
+              <text x="60" y="70" text-anchor="middle" font-size="10" fill="#64748B" font-family="Inter,sans-serif">Present</text>
+            </svg>
+          </div>
+          <div class="att-mini-row">
+            <div class="att-mini"><div class="att-mini-n" style="color:#16A34A">18</div><div class="att-mini-l">Present</div></div>
+            <div class="att-mini"><div class="att-mini-n" style="color:#DC2626">2</div><div class="att-mini-l">Absent</div></div>
+            <div class="att-mini"><div class="att-mini-n" style="color:#D97706">1</div><div class="att-mini-l">Late</div></div>
+            <div class="att-mini"><div class="att-mini-n" style="color:#64748B">3</div><div class="att-mini-l">Holiday</div></div>
+          </div>
+          <div class="att-warning">⚠ Min 75% required · You are at 87% — Safe ✓</div>
+        </div>
+
+        <!-- Assignments -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📝 Assignments</div>
+            <a href="assignments.html" style="font-size:12px;font-weight:700;color:#1E40AF">View All →</a>
+          </div>
+          <div class="assign-item">
+            <div class="assign-icon" style="background:#DBEAFE">📐</div>
+            <div style="flex:1">
+              <div class="assign-title">Maths — Chapter 5 Exercise</div>
+              <div class="assign-sub">Mr. Rajesh Kumar · Due Tomorrow</div>
+            </div>
+            <span class="badge badge-orange">2d</span>
+          </div>
+          <div class="assign-item">
+            <div class="assign-icon" style="background:#FEE2E2">🔬</div>
+            <div style="flex:1">
+              <div class="assign-title">Science Lab Report</div>
+              <div class="assign-sub">Ms. Priya Sharma · Due Today</div>
+            </div>
+            <span class="badge badge-red">Today</span>
+          </div>
+          <div class="assign-item">
+            <div class="assign-icon" style="background:#EDE9FE">📖</div>
+            <div style="flex:1">
+              <div class="assign-title">English Essay — 500 words</div>
+              <div class="assign-sub">Mr. Amit Verma · Due Apr 8</div>
+            </div>
+            <span class="badge badge-blue">4d</span>
+          </div>
+          <div class="assign-item">
+            <div class="assign-icon" style="background:#E0F2FE">💻</div>
+            <div style="flex:1">
+              <div class="assign-title">CS Project — Python Basics</div>
+              <div class="assign-sub">Mr. Amit Sharma · Due Apr 10</div>
+            </div>
+            <span class="badge badge-gray">6d</span>
+          </div>
+        </div>
+
+        <!-- Fee status -->
+        <div class="fee-card paid">
+          <div class="fee-card-label">Fee Status — April 2026</div>
+          <div class="fee-card-amount">All Fees Paid ✓</div>
+          <div class="fee-card-sub">Next due: July 1, 2026 · ₹8,500</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item active"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <a href="attendance.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="grades.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Assignments</a>
+    <a href="library.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Library</a>
+    <a href="fees.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Fees</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>

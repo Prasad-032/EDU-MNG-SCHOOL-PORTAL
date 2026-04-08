@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leave Request — EduManage Teacher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#16A34A; --accent-s:#DCFCE7; --accent-h:#15803D; }
+    .leave-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px 18px; display:flex; align-items:flex-start; gap:14px; }
+    .leave-icon { width:44px; height:44px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .leave-title { font-size:14px; font-weight:700; color:var(--dark); }
+    .leave-meta { font-size:12px; color:var(--gray); margin-top:3px; }
+    .leave-status { margin-left:auto; flex-shrink:0; }
+    .leave-list { display:flex; flex-direction:column; gap:10px; }
+    .balance-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+    .bal-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; text-align:center; }
+    .bal-n { font-size:28px; font-weight:800; }
+    .bal-l { font-size:11px; color:var(--gray); margin-top:4px; }
+    .bal-used { font-size:11px; color:var(--light); margin-top:2px; }
+    .form-group { display:flex; flex-direction:column; gap:5px; }
+    .form-label { font-size:13px; font-weight:600; color:var(--dark); }
+    .form-input, .form-select, .form-textarea { border:1.5px solid var(--border); border-radius:var(--radius-md); padding:8px 12px; font-size:13px; font-family:Inter,sans-serif; outline:none; transition:border-color 0.2s; width:100%; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--accent); }
+    .form-textarea { min-height:80px; resize:vertical; }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-badge">3</span></button>
+    <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=64&h=64&fit=crop&crop=face" alt="Teacher" class="topbar-avatar" id="portalAvatarBtn" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mr. Rajesh Kumar</div><div class="ud-role">Mathematics Teacher</div></div>
+        <a href="dashboard.html" class="ud-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:4px">Leave Request</div>
+    <div style="font-size:13px;color:var(--gray);margin-bottom:20px">Apply for leave and track approval status</div>
+
+    <div class="balance-grid">
+      <div class="bal-card"><div class="bal-n" style="color:#16A34A">8</div><div class="bal-l">Casual Leave</div><div class="bal-used">4 used · 4 left</div></div>
+      <div class="bal-card"><div class="bal-n" style="color:#1E40AF">12</div><div class="bal-l">Sick Leave</div><div class="bal-used">2 used · 10 left</div></div>
+      <div class="bal-card"><div class="bal-n" style="color:#7C3AED">2</div><div class="bal-l">Earned Leave</div><div class="bal-used">0 used · 2 left</div></div>
+      <div class="bal-card"><div class="bal-n" style="color:#D97706">1</div><div class="bal-l">Pending</div><div class="bal-used">Awaiting approval</div></div>
+    </div>
+
+    <div class="grid-2" style="gap:20px">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Apply for Leave</div></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px" id="leaveForm">
+          <div class="form-group"><label class="form-label">Leave Type *</label>
+            <select class="form-select"><option value="">Select type</option><option>Casual Leave</option><option>Sick Leave</option><option>Earned Leave</option><option>Emergency Leave</option></select>
+          </div>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label">From Date *</label><input class="form-input" type="date" /></div>
+            <div class="form-group"><label class="form-label">To Date *</label><input class="form-input" type="date" /></div>
+          </div>
+          <div class="form-group"><label class="form-label">Reason *</label><textarea class="form-textarea" placeholder="Briefly describe the reason…"></textarea></div>
+          <div class="form-group"><label class="form-label">Substitute Teacher (optional)</label><input class="form-input" placeholder="Name of substitute" /></div>
+          <button class="btn btn-primary btn-full" id="submitLeaveBtn">Submit Request</button>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:12px">Leave History</div>
+        <div class="leave-list">
+          <div class="leave-card">
+            <div class="leave-icon" style="background:#FEF3C7">🗓</div>
+            <div style="flex:1">
+              <div class="leave-title">Casual Leave</div>
+              <div class="leave-meta">Mar 15 – Mar 16, 2026 · 2 days · Family function</div>
+            </div>
+            <div class="leave-status"><span class="badge badge-green">Approved</span></div>
+          </div>
+          <div class="leave-card">
+            <div class="leave-icon" style="background:#FEE2E2">🤒</div>
+            <div style="flex:1">
+              <div class="leave-title">Sick Leave</div>
+              <div class="leave-meta">Feb 10, 2026 · 1 day · Fever</div>
+            </div>
+            <div class="leave-status"><span class="badge badge-green">Approved</span></div>
+          </div>
+          <div class="leave-card">
+            <div class="leave-icon" style="background:#DBEAFE">📋</div>
+            <div style="flex:1">
+              <div class="leave-title">Casual Leave</div>
+              <div class="leave-meta">Apr 14, 2026 · 1 day · Personal work</div>
+            </div>
+            <div class="leave-status"><span class="badge badge-orange">Pending</span></div>
+          </div>
+          <div class="leave-card">
+            <div class="leave-icon" style="background:#FEE2E2">❌</div>
+            <div style="flex:1">
+              <div class="leave-title">Earned Leave</div>
+              <div class="leave-meta">Jan 5 – Jan 7, 2026 · 3 days · Vacation</div>
+            </div>
+            <div class="leave-status"><span class="badge badge-red">Rejected</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Home</a>
+    <a href="classes.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Classes</a>
+    <a href="attendance.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="gradebook.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Assign.</a>
+    <a href="messages.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages</a>
+  </nav>
+</div>
+<script>
+document.getElementById('submitLeaveBtn').addEventListener('click', function(){
+  this.textContent = '✓ Request Submitted!';
+  this.style.background = '#16A34A';
+  this.disabled = true;
+  setTimeout(function(){ document.getElementById('submitLeaveBtn').textContent='Submit Request'; document.getElementById('submitLeaveBtn').style.background=''; document.getElementById('submitLeaveBtn').disabled=false; }, 2500);
+});
+(function(){
+  var btn=document.getElementById('portalAvatarBtn'),dd=document.getElementById('portalUserDropdown');
+  if(!btn||!dd)return;
+  btn.addEventListener('click',function(e){e.stopPropagation();dd.classList.toggle('open');});
+  document.addEventListener('click',function(){dd.classList.remove('open');});
+  var lb=document.getElementById('portalLogoutBtn');
+  if(lb)lb.addEventListener('click',function(e){e.preventDefault();if(confirm('Log out?'))window.location.href='../login.html';});
+})();
+</script>
+</body>
+</html>

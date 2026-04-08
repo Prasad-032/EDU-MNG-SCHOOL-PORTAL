@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance — EduManage Student</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#1E40AF !important; --accent-s:#DBEAFE !important; --accent-h:#1D3588 !important; }
+    .month-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .month-tab { padding:7px 16px; border-radius:9999px; border:1.5px solid var(--border); font-size:13px; font-weight:600; color:var(--gray); cursor:pointer; background:#fff; transition:all 0.2s; }
+    .month-tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .att-calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+    .att-cal-header { font-size:11px; font-weight:700; color:var(--gray); text-align:center; padding:4px 0; }
+    .att-cal-day { aspect-ratio:1; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; cursor:default; }
+    .att-cal-day.present { background:#DBEAFE; color:#1E40AF; }
+    .att-cal-day.absent  { background:#FEE2E2; color:#DC2626; }
+    .att-cal-day.late    { background:#FEF3C7; color:#D97706; }
+    .att-cal-day.holiday { background:var(--surface); color:var(--light); }
+    .att-cal-day.empty   { background:transparent; }
+    .att-cal-day.today   { outline:2px solid #1E40AF; }
+    .summary-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+    .sum-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; text-align:center; }
+    .sum-n { font-size:26px; font-weight:800; }
+    .sum-l { font-size:11px; color:var(--gray); margin-top:4px; }
+    .att-log-row { display:flex; align-items:center; gap:12px; padding:11px 18px; border-bottom:1px solid var(--border); }
+    .att-log-row:last-child { border-bottom:none; }
+    .att-log-date { font-size:13px; font-weight:700; color:var(--dark); min-width:100px; }
+    .att-log-day  { font-size:12px; color:var(--gray); min-width:70px; }
+    .att-log-time { font-size:12px; color:var(--gray); margin-left:auto; }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon" style="background:#1E40AF">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-badge">2</span></button>
+    <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=64&h=64&fit=crop&crop=face" alt="Student" class="topbar-avatar" id="portalAvatarBtn" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Raju Sharma</div><div class="ud-role">Student · Class 10A</div></div>
+        <a href="dashboard.html" class="ud-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:4px">Attendance</div>
+    <div style="font-size:13px;color:var(--gray);margin-bottom:20px">Class 10A · Roll No. 12 · 2025–26</div>
+
+    <div class="summary-grid">
+      <div class="sum-card"><div class="sum-n" style="color:#1E40AF">87%</div><div class="sum-l">Overall</div></div>
+      <div class="sum-card"><div class="sum-n" style="color:#16A34A">142</div><div class="sum-l">Present</div></div>
+      <div class="sum-card"><div class="sum-n" style="color:#DC2626">18</div><div class="sum-l">Absent</div></div>
+      <div class="sum-card"><div class="sum-n" style="color:#D97706">4</div><div class="sum-l">Late</div></div>
+    </div>
+
+    <div style="background:#DBEAFE;border-radius:var(--radius-lg);padding:12px 16px;margin-bottom:20px;font-size:13px;color:#1E40AF;font-weight:600">
+      ✅ You are at 87% — above the 75% minimum requirement. Keep it up!
+    </div>
+
+    <div class="month-tabs" id="monthTabs">
+      <button class="month-tab" data-month="1">Jan</button>
+      <button class="month-tab" data-month="2">Feb</button>
+      <button class="month-tab" data-month="3">Mar</button>
+      <button class="month-tab active" data-month="4">Apr</button>
+    </div>
+
+    <div class="grid-2" style="gap:20px">
+      <div class="card">
+        <div class="card-header"><div class="card-title">April 2026 Calendar</div>
+          <div style="display:flex;gap:10px;font-size:11px">
+            <span style="color:#1E40AF">● Present</span>
+            <span style="color:#DC2626">● Absent</span>
+            <span style="color:#D97706">● Late</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="att-calendar" id="attCal"></div>
+          <div style="display:flex;justify-content:space-around;margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+            <div style="text-align:center"><div style="font-size:20px;font-weight:800;color:#16A34A">18</div><div style="font-size:11px;color:var(--gray)">Present</div></div>
+            <div style="text-align:center"><div style="font-size:20px;font-weight:800;color:#DC2626">2</div><div style="font-size:11px;color:var(--gray)">Absent</div></div>
+            <div style="text-align:center"><div style="font-size:20px;font-weight:800;color:#D97706">1</div><div style="font-size:11px;color:var(--gray)">Late</div></div>
+            <div style="text-align:center"><div style="font-size:20px;font-weight:800;color:var(--gray)">3</div><div style="font-size:11px;color:var(--gray)">Holiday</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Absence Log</div></div>
+        <div id="absenceLog">
+          <div class="att-log-row"><div class="att-log-date">Apr 3, 2026</div><div class="att-log-day">Friday</div><span class="badge badge-red">Absent</span><div class="att-log-time">—</div></div>
+          <div class="att-log-row"><div class="att-log-date">Apr 7, 2026</div><div class="att-log-day">Tuesday</div><span class="badge badge-orange">Late</span><div class="att-log-time">9:22 AM</div></div>
+          <div class="att-log-row"><div class="att-log-date">Mar 28, 2026</div><div class="att-log-day">Saturday</div><span class="badge badge-red">Absent</span><div class="att-log-time">—</div></div>
+          <div class="att-log-row"><div class="att-log-date">Mar 15, 2026</div><div class="att-log-day">Sunday</div><span class="badge badge-gray">Holiday</span><div class="att-log-time">—</div></div>
+          <div class="att-log-row"><div class="att-log-date">Feb 20, 2026</div><div class="att-log-day">Friday</div><span class="badge badge-red">Absent</span><div class="att-log-time">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <a href="attendance.html" class="bn-item active"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="grades.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Assignments</a>
+    <a href="library.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Library</a>
+    <a href="fees.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Fees</a>
+  </nav>
+</div>
+<script>
+var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var cal = document.getElementById('attCal');
+days.forEach(function(d){ cal.innerHTML += '<div class="att-cal-header">'+d+'</div>'; });
+// April 2026 starts Wednesday (index 3)
+for(var i=0;i<3;i++) cal.innerHTML += '<div class="att-cal-day empty"></div>';
+var statuses = ['present','present','absent','holiday','holiday','present','late','present','present','present','holiday','holiday','present','present','present','present','present','holiday','holiday','present','present','present','present','present','holiday','holiday','absent','present','present'];
+statuses.forEach(function(s,i){ cal.innerHTML += '<div class="att-cal-day '+s+(i+1===8?' today':'')+'">'+(i+1)+'</div>'; });
+
+document.querySelectorAll('.month-tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.month-tab').forEach(function(x){x.classList.remove('active');});
+    t.classList.add('active');
+  });
+});
+(function(){
+  var btn=document.getElementById('portalAvatarBtn'),dd=document.getElementById('portalUserDropdown');
+  if(!btn||!dd)return;
+  btn.addEventListener('click',function(e){e.stopPropagation();dd.classList.toggle('open');});
+  document.addEventListener('click',function(){dd.classList.remove('open');});
+  var lb=document.getElementById('portalLogoutBtn');
+  if(lb)lb.addEventListener('click',function(e){e.preventDefault();if(confirm('Log out?'))window.location.href='../login.html';});
+})();
+</script>
+</body>
+</html>

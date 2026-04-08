@@ -1,0 +1,21 @@
+/* Progress card */
+.fee-progress-card {}
+.fee-progress-bar-wrap { margin-bottom: 24px; }
+.fee-progress-bar { height: 16px; background: #E2E8F0; border-radius: 9999px; overflow: hidden; margin-bottom: 8px; }
+.fee-progress-fill { height: 100%; background: linear-gradient(90deg, #1E40AF, #0EA5E9); border-radius: 9999px; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); }
+.fee-progress-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray); }
+
+.fee-breakdown-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.fee-bd-item { display: flex; align-items: center; gap: 10px; background: var(--surface); border-radius: var(--radius-md); padding: 12px; }
+.fee-bd-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.fee-bd-label{ font-size: 12px; color: var(--gray); }
+.fee-bd-val  { font-size: 13px; font-weight: 700; color: var(--dark); margin-top: 2px; }
+.fee-bd-pct  { margin-left: auto; font-size: 14px; font-weight: 800; color: var(--dark); }
+
+/* Pagination reuse */
+.st-pagination { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 10px; font-size: 13px; color: var(--gray); }
+.st-page-btns  { display: flex; gap: 4px; }
+
+@media (max-width: 900px) {
+  .fee-breakdown-grid { grid-template-columns: 1fr 1fr; }
+}

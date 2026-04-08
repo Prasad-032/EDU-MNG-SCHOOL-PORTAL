@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignments — EduManage Teacher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#16A34A; --accent-s:#DCFCE7; --accent-h:#15803D; }
+    .assign-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px 18px; display:flex; align-items:flex-start; gap:14px; transition:all 0.2s; }
+    .assign-card:hover { box-shadow:var(--shadow-md); }
+    .assign-icon { width:44px; height:44px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .assign-title { font-size:14px; font-weight:700; color:var(--dark); }
+    .assign-meta { font-size:12px; color:var(--gray); margin-top:3px; }
+    .assign-actions { margin-left:auto; display:flex; gap:8px; align-items:center; flex-shrink:0; }
+    .assign-list { display:flex; flex-direction:column; gap:10px; }
+    .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+    .modal-backdrop.open { opacity:1; pointer-events:all; }
+    .modal { background:#fff; border-radius:var(--radius-xl); width:100%; max-width:520px; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
+    .modal-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .modal-title { font-size:15px; font-weight:700; }
+    .modal-close { background:none; border:none; font-size:18px; cursor:pointer; color:var(--gray); }
+    .modal-body { padding:20px; display:flex; flex-direction:column; gap:14px; }
+    .form-group { display:flex; flex-direction:column; gap:5px; }
+    .form-label { font-size:13px; font-weight:600; color:var(--dark); }
+    .form-input, .form-select, .form-textarea { border:1.5px solid var(--border); border-radius:var(--radius-md); padding:8px 12px; font-size:13px; font-family:Inter,sans-serif; outline:none; transition:border-color 0.2s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--accent); }
+    .form-textarea { min-height:80px; resize:vertical; }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-badge">3</span></button>
+    <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=64&h=64&fit=crop&crop=face" alt="Teacher" class="topbar-avatar" id="portalAvatarBtn" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mr. Rajesh Kumar</div><div class="ud-role">Mathematics Teacher</div></div>
+        <a href="dashboard.html" class="ud-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div><div style="font-size:20px;font-weight:800;color:var(--dark)">Assignments</div><div style="font-size:13px;color:var(--gray);margin-top:2px">Create and manage assignments for your classes</div></div>
+      <button class="btn btn-primary" id="newAssignBtn">+ New Assignment</button>
+    </div>
+
+    <div class="stat-row" style="margin-bottom:20px">
+      <div class="stat-card"><div class="sc-icon" style="background:#DBEAFE">📝</div><div><div class="sc-num" style="color:#1E40AF">8</div><div class="sc-label">Active</div></div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:#FEF3C7">⏰</div><div><div class="sc-num" style="color:#D97706">3</div><div class="sc-label">Due Today</div></div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:#DCFCE7">✅</div><div><div class="sc-num" style="color:#16A34A">24</div><div class="sc-label">Completed</div></div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:#FEE2E2">⚠️</div><div><div class="sc-num" style="color:#DC2626">5</div><div class="sc-label">Overdue</div></div></div>
+    </div>
+
+    <div class="assign-list">
+      <div class="assign-card">
+        <div class="assign-icon" style="background:#DBEAFE">📐</div>
+        <div style="flex:1">
+          <div class="assign-title">Chapter 5 — Arithmetic Progressions Exercise</div>
+          <div class="assign-meta">Class 10A · Due Apr 10, 2026 · 42 students</div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <span class="badge badge-green">38 submitted</span>
+            <span class="badge badge-orange">4 pending</span>
+          </div>
+        </div>
+        <div class="assign-actions">
+          <button class="btn btn-outline btn-sm">View</button>
+          <button class="btn btn-ghost btn-sm">Edit</button>
+        </div>
+      </div>
+
+      <div class="assign-card">
+        <div class="assign-icon" style="background:#DCFCE7">📊</div>
+        <div style="flex:1">
+          <div class="assign-title">Statistics — Data Interpretation Project</div>
+          <div class="assign-meta">Class 9B · Due Apr 12, 2026 · 43 students</div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <span class="badge badge-green">30 submitted</span>
+            <span class="badge badge-orange">13 pending</span>
+          </div>
+        </div>
+        <div class="assign-actions">
+          <button class="btn btn-outline btn-sm">View</button>
+          <button class="btn btn-ghost btn-sm">Edit</button>
+        </div>
+      </div>
+
+      <div class="assign-card">
+        <div class="assign-icon" style="background:#EDE9FE">📏</div>
+        <div style="flex:1">
+          <div class="assign-title">Geometry — Triangles Worksheet</div>
+          <div class="assign-meta">Class 8A · Due Apr 8, 2026 · 41 students</div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <span class="badge badge-red">Due Today</span>
+            <span class="badge badge-orange">18 pending</span>
+          </div>
+        </div>
+        <div class="assign-actions">
+          <button class="btn btn-outline btn-sm">View</button>
+          <button class="btn btn-ghost btn-sm">Edit</button>
+        </div>
+      </div>
+
+      <div class="assign-card" style="opacity:0.7">
+        <div class="assign-icon" style="background:#DCFCE7">✅</div>
+        <div style="flex:1">
+          <div class="assign-title">Unit Test 1 — Algebra Review</div>
+          <div class="assign-meta">Class 10A · Submitted Apr 1, 2026 · 42/42 submitted</div>
+          <div style="margin-top:8px"><span class="badge badge-green">Completed</span></div>
+        </div>
+        <div class="assign-actions">
+          <button class="btn btn-outline btn-sm">View Results</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Assignment Modal -->
+  <div class="modal-backdrop" id="assignModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">New Assignment</div>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group"><label class="form-label">Title *</label><input class="form-input" placeholder="e.g. Chapter 5 Exercise" /></div>
+        <div class="grid-2">
+          <div class="form-group"><label class="form-label">Class *</label><select class="form-select"><option>Class 10A</option><option>Class 9B</option><option>Class 8A</option><option>Class 7C</option></select></div>
+          <div class="form-group"><label class="form-label">Due Date *</label><input class="form-input" type="date" /></div>
+        </div>
+        <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" placeholder="Instructions for students…"></textarea></div>
+        <div style="display:flex;justify-content:flex-end;gap:8px">
+          <button class="btn btn-outline" id="cancelBtn">Cancel</button>
+          <button class="btn btn-primary">Create Assignment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Home</a>
+    <a href="classes.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Classes</a>
+    <a href="attendance.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="gradebook.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Assign.</a>
+    <a href="messages.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages</a>
+  </nav>
+</div>
+<script>
+var modal = document.getElementById('assignModal');
+document.getElementById('newAssignBtn').addEventListener('click', function(){ modal.classList.add('open'); });
+document.getElementById('modalClose').addEventListener('click', function(){ modal.classList.remove('open'); });
+document.getElementById('cancelBtn').addEventListener('click', function(){ modal.classList.remove('open'); });
+modal.addEventListener('click', function(e){ if(e.target===modal) modal.classList.remove('open'); });
+(function(){
+  var btn=document.getElementById('portalAvatarBtn'),dd=document.getElementById('portalUserDropdown');
+  if(!btn||!dd)return;
+  btn.addEventListener('click',function(e){e.stopPropagation();dd.classList.toggle('open');});
+  document.addEventListener('click',function(){dd.classList.remove('open');});
+  var lb=document.getElementById('portalLogoutBtn');
+  if(lb)lb.addEventListener('click',function(e){e.preventDefault();if(confirm('Log out?'))window.location.href='../login.html';});
+})();
+</script>
+</body>
+</html>

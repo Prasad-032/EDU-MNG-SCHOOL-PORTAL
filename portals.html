@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Hub — EduManage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #F1F5F9; color: #1E293B; min-height: 100vh; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Navbar */
+    .nav { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; }
+    .nav-logo-icon { width: 36px; height: 36px; background: #1E40AF; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-links a { padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; color: #64748B; transition: all 0.2s; }
+    .nav-links a:hover { background: #EFF6FF; color: #1E40AF; }
+
+    /* Hero */
+    .hub-hero { text-align: center; padding: 56px 24px 40px; }
+    .hub-hero h1 { font-size: 36px; font-weight: 800; color: #1E293B; margin-bottom: 10px; }
+    .hub-hero p  { font-size: 16px; color: #64748B; max-width: 520px; margin: 0 auto; }
+
+    /* Portal grid */
+    .hub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 24px 64px; }
+
+    .portal-col { display: flex; flex-direction: column; gap: 12px; }
+
+    /* Portal header card */
+    .portal-header {
+      border-radius: 16px; padding: 24px 20px 20px;
+      color: #fff; position: relative; overflow: hidden;
+    }
+    .portal-header::before {
+      content: attr(data-emoji);
+      position: absolute; right: -8px; bottom: -12px;
+      font-size: 72px; opacity: 0.15; line-height: 1;
+    }
+    .ph-role  { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.75; margin-bottom: 6px; }
+    .ph-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .ph-desc  { font-size: 13px; opacity: 0.80; line-height: 1.5; margin-bottom: 16px; }
+    .ph-user  { display: flex; align-items: center; gap: 8px; }
+    .ph-avatar{ width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.4); }
+    .ph-name  { font-size: 12px; font-weight: 700; }
+    .ph-sub   { font-size: 10px; opacity: 0.7; }
+
+    /* Page link cards */
+    .page-link {
+      background: #fff; border: 1px solid #E2E8F0; border-radius: 12px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .page-link:hover { border-color: var(--pc); background: var(--pb); transform: translateX(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .pl-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--pb); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .pl-body { flex: 1; min-width: 0; }
+    .pl-title { font-size: 13px; font-weight: 700; color: #1E293B; }
+    .pl-sub   { font-size: 11px; color: #64748B; margin-top: 1px; }
+    .pl-arrow { color: #CBD5E1; font-size: 14px; transition: color 0.2s; }
+    .page-link:hover .pl-arrow { color: var(--pc); }
+
+    .section-label { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 4px 0; }
+
+    @media (max-width: 1024px) { .hub-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px)  { .hub-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">E</div>
+      EduManage
+    </a>
+    <div class="nav-links">
+      <a href="index.html">← Landing Page</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </nav>
+
+  <div class="hub-hero">
+    <h1>🗂 Portal Hub</h1>
+    <p>All four user portals in one place. Click any page to open it directly.</p>
+  </div>
+
+  <div class="hub-grid">
+
+    <!-- ===== ADMIN ===== -->
+    <div class="portal-col">
+      <div class="portal-header" data-emoji="🏫" style="background:linear-gradient(135deg,#7C3AED,#4338CA)">
+        <div class="ph-role">Admin / Principal</div>
+        <div class="ph-title">Admin Portal</div>
+        <div class="ph-desc">Full school control — students, staff, fees, reports and settings.</div>
+        <div class="ph-user">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=64&h=64&fit=crop&crop=face" class="ph-avatar" alt="Admin" />
+          <div><div class="ph-name">Priya Nair</div><div class="ph-sub">Principal</div></div>
+        </div>
+      </div>
+
+      <div class="section-label">Core Pages</div>
+      <a href="admin/dashboard.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">📊</div>
+        <div class="pl-body"><div class="pl-title">Dashboard</div><div class="pl-sub">KPIs, charts, activity feed</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/students.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">🎓</div>
+        <div class="pl-body"><div class="pl-title">Students</div><div class="pl-sub">List, search, add, manage</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/fees.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">💰</div>
+        <div class="pl-body"><div class="pl-title">Fee Management</div><div class="pl-sub">Collection, outstanding, reminders</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+
+      <div class="section-label">More Pages</div>
+      <a href="admin/teachers.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">👩‍🏫</div>
+        <div class="pl-body"><div class="pl-title">Teachers</div><div class="pl-sub">Staff profiles & management</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/attendance.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">✅</div>
+        <div class="pl-body"><div class="pl-title">Attendance</div><div class="pl-sub">School-wide heatmap & reports</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/timetable.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">📅</div>
+        <div class="pl-body"><div class="pl-title">Timetable</div><div class="pl-sub">Drag-and-drop schedule builder</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/exams.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">📝</div>
+        <div class="pl-body"><div class="pl-title">Exams</div><div class="pl-sub">Schedule, marks entry, results</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/communication.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">📢</div>
+        <div class="pl-body"><div class="pl-title">Communication</div><div class="pl-sub">SMS, email, push notifications</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/reports.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">📈</div>
+        <div class="pl-body"><div class="pl-title">Reports</div><div class="pl-sub">Analytics & custom reports</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="admin/settings.html" class="page-link" style="--pc:#7C3AED;--pb:#EDE9FE">
+        <div class="pl-icon">⚙️</div>
+        <div class="pl-body"><div class="pl-title">Settings</div><div class="pl-sub">School config, roles, permissions</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ===== TEACHER ===== -->
+    <div class="portal-col">
+      <div class="portal-header" data-emoji="👩‍🏫" style="background:linear-gradient(135deg,#16A34A,#15803D)">
+        <div class="ph-role">Teacher</div>
+        <div class="ph-title">Teacher Portal</div>
+        <div class="ph-desc">Mobile-first tools — attendance, grades, lesson plans and messaging.</div>
+        <div class="ph-user">
+          <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=64&h=64&fit=crop&crop=face" class="ph-avatar" alt="Teacher" />
+          <div><div class="ph-name">Rajesh Kumar</div><div class="ph-sub">Maths Teacher</div></div>
+        </div>
+      </div>
+
+      <div class="section-label">Pages</div>
+      <a href="teacher/dashboard.html" class="page-link" style="--pc:#16A34A;--pb:#DCFCE7">
+        <div class="pl-icon">🏠</div>
+        <div class="pl-body"><div class="pl-title">Dashboard</div><div class="pl-sub">Today's classes & pending tasks</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="teacher/attendance.html" class="page-link" style="--pc:#16A34A;--pb:#DCFCE7">
+        <div class="pl-icon">✅</div>
+        <div class="pl-body"><div class="pl-title">Mark Attendance</div><div class="pl-sub">60-second roll call</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="teacher/gradebook.html" class="page-link" style="--pc:#16A34A;--pb:#DCFCE7">
+        <div class="pl-icon">📒</div>
+        <div class="pl-body"><div class="pl-title">Gradebook</div><div class="pl-sub">Enter marks & view distributions</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="teacher/assignments.html" class="page-link" style="--pc:#16A34A;--pb:#DCFCE7">
+        <div class="pl-icon">📝</div>
+        <div class="pl-body"><div class="pl-title">Assignments</div><div class="pl-sub">Create, assign & grade</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="teacher/classes.html" class="page-link" style="--pc:#16A34A;--pb:#DCFCE7">
+        <div class="pl-icon">📚</div>
+        <div class="pl-body"><div class="pl-title">My Classes</div><div class="pl-sub">Student roster per subject</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="teacher/messages.html" class="page-link" style="--pc:#16A34A;--pb:#DCFCE7">
+        <div class="pl-icon">💬</div>
+        <div class="pl-body"><div class="pl-title">Messages</div><div class="pl-sub">Parent & student communication</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="teacher/leave.html" class="page-link" style="--pc:#16A34A;--pb:#DCFCE7">
+        <div class="pl-icon">🗓</div>
+        <div class="pl-body"><div class="pl-title">Leave Request</div><div class="pl-sub">Apply & track approval</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ===== STUDENT ===== -->
+    <div class="portal-col">
+      <div class="portal-header" data-emoji="🎓" style="background:linear-gradient(135deg,#1E40AF,#0EA5E9)">
+        <div class="ph-role">Student</div>
+        <div class="ph-title">Student Portal</div>
+        <div class="ph-desc">Grades, timetable, assignments, fees and library — all in one place.</div>
+        <div class="ph-user">
+          <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=64&h=64&fit=crop&crop=face" class="ph-avatar" alt="Student" />
+          <div><div class="ph-name">Raju Sharma</div><div class="ph-sub">Class 10A</div></div>
+        </div>
+      </div>
+
+      <div class="section-label">Pages</div>
+      <a href="student/dashboard.html" class="page-link" style="--pc:#1E40AF;--pb:#DBEAFE">
+        <div class="pl-icon">🏠</div>
+        <div class="pl-body"><div class="pl-title">Dashboard</div><div class="pl-sub">Schedule, grades & attendance</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="student/timetable.html" class="page-link" style="--pc:#1E40AF;--pb:#DBEAFE">
+        <div class="pl-icon">📅</div>
+        <div class="pl-body"><div class="pl-title">Timetable</div><div class="pl-sub">Weekly class schedule</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="student/grades.html" class="page-link" style="--pc:#1E40AF;--pb:#DBEAFE">
+        <div class="pl-icon">📊</div>
+        <div class="pl-body"><div class="pl-title">Grades</div><div class="pl-sub">Report card & performance</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="student/assignments.html" class="page-link" style="--pc:#1E40AF;--pb:#DBEAFE">
+        <div class="pl-icon">📝</div>
+        <div class="pl-body"><div class="pl-title">Assignments</div><div class="pl-sub">View, submit & track deadlines</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="student/attendance.html" class="page-link" style="--pc:#1E40AF;--pb:#DBEAFE">
+        <div class="pl-icon">✅</div>
+        <div class="pl-body"><div class="pl-title">Attendance</div><div class="pl-sub">Monthly history & percentage</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="student/fees.html" class="page-link" style="--pc:#1E40AF;--pb:#DBEAFE">
+        <div class="pl-icon">💳</div>
+        <div class="pl-body"><div class="pl-title">Fee Payment</div><div class="pl-sub">View & pay fees online</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="student/library.html" class="page-link" style="--pc:#1E40AF;--pb:#DBEAFE">
+        <div class="pl-icon">📚</div>
+        <div class="pl-body"><div class="pl-title">Library</div><div class="pl-sub">Search, borrow & reserve books</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ===== PARENT ===== -->
+    <div class="portal-col">
+      <div class="portal-header" data-emoji="👪" style="background:linear-gradient(135deg,#D97706,#B45309)">
+        <div class="ph-role">Parent</div>
+        <div class="ph-title">Parent Portal</div>
+        <div class="ph-desc">Real-time attendance, grades, bus tracking and fee payment.</div>
+        <div class="ph-user">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=64&h=64&fit=crop&crop=face" class="ph-avatar" alt="Parent" />
+          <div><div class="ph-name">Sunita Mehta</div><div class="ph-sub">Parent of Raju</div></div>
+        </div>
+      </div>
+
+      <div class="section-label">Pages</div>
+      <a href="parent/dashboard.html" class="page-link" style="--pc:#D97706;--pb:#FEF3C7">
+        <div class="pl-icon">🏠</div>
+        <div class="pl-body"><div class="pl-title">Dashboard</div><div class="pl-sub">Child overview & quick actions</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="parent/attendance.html" class="page-link" style="--pc:#D97706;--pb:#FEF3C7">
+        <div class="pl-icon">✅</div>
+        <div class="pl-body"><div class="pl-title">Attendance</div><div class="pl-sub">Day-wise history & calendar</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="parent/academics.html" class="page-link" style="--pc:#D97706;--pb:#FEF3C7">
+        <div class="pl-icon">📊</div>
+        <div class="pl-body"><div class="pl-title">Academic Progress</div><div class="pl-sub">Grades, report cards & remarks</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="parent/fees.html" class="page-link" style="--pc:#D97706;--pb:#FEF3C7">
+        <div class="pl-icon">💳</div>
+        <div class="pl-body"><div class="pl-title">Fee Payment</div><div class="pl-sub">Pay fees & download receipts</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="parent/bus.html" class="page-link" style="--pc:#D97706;--pb:#FEF3C7">
+        <div class="pl-icon">🚌</div>
+        <div class="pl-body"><div class="pl-title">Bus Tracking</div><div class="pl-sub">Live GPS location & ETA</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="parent/messages.html" class="page-link" style="--pc:#D97706;--pb:#FEF3C7">
+        <div class="pl-icon">💬</div>
+        <div class="pl-body"><div class="pl-title">Messages</div><div class="pl-sub">Chat with teachers directly</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+      <a href="parent/announcements.html" class="page-link" style="--pc:#D97706;--pb:#FEF3C7">
+        <div class="pl-icon">📢</div>
+        <div class="pl-body"><div class="pl-title">Announcements</div><div class="pl-sub">Circulars, events & alerts</div></div>
+        <span class="pl-arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Auth pages section -->
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px">
+    <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px">Auth & Utility Pages</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="index.html"            style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#1E293B;display:flex;align-items:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='#1E40AF';this.style.color='#1E40AF'" onmouseout="this.style.borderColor='#E2E8F0';this.style.color='#1E293B'">🏠 Landing Page</a>
+      <a href="login.html"            style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#1E293B;display:flex;align-items:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='#1E40AF';this.style.color='#1E40AF'" onmouseout="this.style.borderColor='#E2E8F0';this.style.color='#1E293B'">🔑 Login</a>
+      <a href="register.html"         style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#1E293B;display:flex;align-items:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='#1E40AF';this.style.color='#1E40AF'" onmouseout="this.style.borderColor='#E2E8F0';this.style.color='#1E293B'">📋 Register</a>
+      <a href="forgot-password.html"  style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#1E293B;display:flex;align-items:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='#1E40AF';this.style.color='#1E40AF'" onmouseout="this.style.borderColor='#E2E8F0';this.style.color='#1E293B'">🔒 Forgot Password</a>
+      <a href="contact.html"          style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#1E293B;display:flex;align-items:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='#1E40AF';this.style.color='#1E40AF'" onmouseout="this.style.borderColor='#E2E8F0';this.style.color='#1E293B'">💬 Contact & Support</a>
+      <a href="404.html"              style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#1E293B;display:flex;align-items:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='#1E40AF';this.style.color='#1E40AF'" onmouseout="this.style.borderColor='#E2E8F0';this.style.color='#1E293B'">❌ 404 Page</a>
+    </div>
+  </div>
+
+</body>
+</html>

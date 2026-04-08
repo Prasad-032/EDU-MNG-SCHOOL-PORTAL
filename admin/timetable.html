@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timetable — EduManage Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo"><div class="sb-logo-icon">E</div><span class="sb-logo-text">EduManage</span></div>
+    <nav class="sb-nav">
+      <div class="sb-group-label">Overview</div>
+      <a href="dashboard.html" class="sb-item" data-label="Dashboard"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="sb-item-label">Dashboard</span></a>
+      <div class="sb-group-label">Academics</div>
+      <a href="students.html" class="sb-item" data-label="Students"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="sb-item-label">Students</span></a>
+      <a href="attendance.html" class="sb-item" data-label="Attendance"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="sb-item-label">Attendance</span></a>
+      <a href="timetable.html" class="sb-item active" data-label="Timetable"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="sb-item-label">Timetable</span></a>
+      <a href="exams.html" class="sb-item" data-label="Exams"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="sb-item-label">Exams</span></a>
+      <div class="sb-group-label">Finance</div>
+      <a href="fees.html" class="sb-item" data-label="Fees"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="sb-item-label">Fee Management</span></a>
+      <div class="sb-group-label">Management</div>
+      <a href="settings.html" class="sb-item" data-label="Settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="sb-item-label">Settings</span></a>
+    </nav>
+        <button class="sb-logout-btn logout-btn" title="Logout">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Logout</span>
+    </button>
+<div class="sb-user"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=64&h=64&fit=crop&crop=face" alt="Admin" class="sb-user-avatar" /><div class="sb-user-info"><div class="sb-user-name">Priya Nair</div><div class="sb-user-role">Principal</div></div><button class="sb-collapse-btn" id="sidebarToggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button></div>
+  </aside>
+
+  <div class="admin-main" id="adminMain">
+    <header class="topbar">
+      <div><div class="topbar-title">Timetable Builder</div><div class="topbar-breadcrumb">Admin / Academics / Timetable</div></div>
+      <div class="topbar-actions">
+        <select class="form-select" id="ttClass" style="width:140px"><option>Class 10 — A</option><option>Class 10 — B</option><option>Class 9 — A</option><option>Class 9 — B</option><option>Class 8 — A</option></select>
+        <button class="btn btn-outline btn-sm">🖨 Print</button>
+        <button class="btn btn-primary btn-sm">💾 Save Timetable</button>
+                <div class="user-menu-wrap">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=64&h=64&fit=crop&crop=face" alt="Admin" class="topbar-avatar" />
+          <div class="user-dropdown" id="adminUserDropdown">
+            <div class="ud-header"><div class="ud-name">Priya Nair</div><div class="ud-role">Principal &middot; Admin</div>            <a href="profile.html" class="ud-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              My Profile
+            </a>
+            </div>
+            <a href="settings.html" class="ud-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>
+              Settings
+            </a>
+            <a href="../login.html" class="ud-item logout logout-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Logout
+            </a>
+      <a href="classes.html" class="sb-item" data-label="Classes">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span class="sb-item-label">Classes</span>
+      </a>
+      <a href="invoices.html" class="sb-item" data-label="Invoices">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="sb-item-label">Invoices</span>
+      </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div style="display:grid;grid-template-columns:1fr 220px;gap:16px">
+        <!-- Timetable grid -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">Class 10A — Weekly Schedule</div><span class="badge badge-green">No Conflicts</span></div>
+          <div class="card-body" style="padding:0;overflow-x:auto">
+            <div id="ttGrid"></div>
+          </div>
+        </div>
+        <!-- Subject palette -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">Subjects</div></div>
+          <div class="card-body" style="padding:12px">
+            <div id="subjectPalette"></div>
+            <div style="margin-top:16px;font-size:12px;color:var(--gray)">Drag subjects into the timetable slots</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="shared.js"></script>
+<script>
+const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const periods = ['8:00–8:45','8:45–9:30','9:30–10:15','Break','10:30–11:15','11:15–12:00','Lunch','1:00–1:45','1:45–2:30'];
+const subjects = [
+  {name:'Mathematics', color:'#DBEAFE', text:'#1E40AF', teacher:'Mr. Sharma'},
+  {name:'Science',     color:'#DCFCE7', text:'#16A34A', teacher:'Ms. Priya'},
+  {name:'English',     color:'#EDE9FE', text:'#7C3AED', teacher:'Mr. Rajan'},
+  {name:'History',     color:'#FEF3C7', text:'#D97706', teacher:'Ms. Kavya'},
+  {name:'Geography',   color:'#FEE2E2', text:'#DC2626', teacher:'Mr. Arjun'},
+  {name:'Computer',    color:'#E0F2FE', text:'#0EA5E9', teacher:'Ms. Meera'},
+  {name:'P.E.',        color:'#F0FDF4', text:'#15803D', teacher:'Mr. Rohit'},
+  {name:'Art',         color:'#FDF4FF', text:'#9333EA', teacher:'Ms. Anita'},
+];
+
+// Build grid
+const grid = document.getElementById('ttGrid');
+let html = '<table style="width:100%;border-collapse:collapse">';
+html += '<thead><tr><th style="padding:10px 14px;background:#F8FAFC;font-size:11px;color:var(--gray);text-transform:uppercase;border-bottom:1px solid var(--border);min-width:100px">Period</th>';
+days.forEach(d => { html += `<th style="padding:10px 14px;background:#F8FAFC;font-size:11px;color:var(--gray);text-transform:uppercase;border-bottom:1px solid var(--border);min-width:120px">${d}</th>`; });
+html += '</tr></thead><tbody>';
+
+const schedule = {
+  '8:00–8:45':   ['Mathematics','Science','English','Mathematics','Science','P.E.'],
+  '8:45–9:30':   ['English','Mathematics','Science','English','Mathematics','Art'],
+  '9:30–10:15':  ['Science','History','Mathematics','Computer','English','Mathematics'],
+  'Break':       ['—','—','—','—','—','—'],
+  '10:30–11:15': ['History','English','Computer','Science','Geography','—'],
+  '11:15–12:00': ['Computer','Geography','History','P.E.','Computer','—'],
+  'Lunch':       ['—','—','—','—','—','—'],
+  '1:00–1:45':   ['Geography','Computer','P.E.','History','Art','—'],
+  '1:45–2:30':   ['P.E.','Art','Geography','Art','History','—'],
+};
+
+periods.forEach(p => {
+  const isBreak = p === 'Break' || p === 'Lunch';
+  html += `<tr>`;
+  html += `<td style="padding:8px 14px;font-size:12px;font-weight:600;color:var(--gray);border-bottom:1px solid var(--border);white-space:nowrap;background:${isBreak?'#F8FAFC':'#fff'}">${p}</td>`;
+  days.forEach((d,i) => {
+    const subName = schedule[p]?.[i] || '—';
+    const sub = subjects.find(s => s.name === subName);
+    if (isBreak) {
+      html += `<td style="padding:8px;border-bottom:1px solid var(--border);background:#F8FAFC;text-align:center;font-size:11px;color:var(--gray);font-weight:600">${p}</td>`;
+    } else if (sub) {
+      html += `<td style="padding:6px;border-bottom:1px solid var(--border)"><div style="background:${sub.color};color:${sub.text};border-radius:6px;padding:8px 10px;font-size:12px;font-weight:700;cursor:pointer" title="${sub.teacher}">${sub.name}<div style="font-size:10px;font-weight:400;margin-top:2px;opacity:0.8">${sub.teacher}</div></div></td>`;
+    } else {
+      html += `<td style="padding:6px;border-bottom:1px solid var(--border)"><div style="border:2px dashed var(--border);border-radius:6px;padding:8px;font-size:11px;color:var(--light);text-align:center;cursor:pointer">+ Add</div></td>`;
+    }
+  });
+  html += '</tr>';
+});
+html += '</tbody></table>';
+grid.innerHTML = html;
+
+// Subject palette
+const palette = document.getElementById('subjectPalette');
+subjects.forEach(s => {
+  palette.innerHTML += `<div style="background:${s.color};color:${s.text};border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;font-weight:700;cursor:grab;display:flex;justify-content:space-between;align-items:center">${s.name}<span style="font-size:10px;font-weight:400;opacity:0.8">${s.teacher}</span></div>`;
+});
+</script>
+</body></html>

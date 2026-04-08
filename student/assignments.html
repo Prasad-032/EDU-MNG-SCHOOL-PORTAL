@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignments — EduManage Student</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#1E40AF !important; --accent-s:#DBEAFE !important; --accent-h:#1D3588 !important; }
+    .bottom-nav { position:fixed;bottom:0;left:0;right:0;height:60px;background:#fff;border-top:1px solid var(--border);display:flex !important;z-index:40; }
+    .bn-item { flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;font-weight:600;color:var(--gray);text-decoration:none;transition:color 0.2s; }
+    .bn-item.active { color:#1E40AF; }
+    .bn-item svg { width:20px;height:20px;display:block; }
+
+    .filter-tabs { display:flex; gap:6px; margin-bottom:20px; }
+    .filter-tab { padding:7px 16px; border-radius:9999px; border:1.5px solid var(--border); background:#fff; font-size:13px; font-weight:700; color:var(--gray); cursor:pointer; transition:all 0.2s; }
+    .filter-tab.active { background:#1E40AF; color:#fff; border-color:#1E40AF; }
+
+    .assign-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow-sm); transition:all 0.2s; }
+    .assign-card:hover { box-shadow:var(--shadow-md); }
+    .assign-card.overdue { border-left:4px solid #DC2626; }
+    .assign-card.due-today { border-left:4px solid #D97706; }
+    .assign-card.submitted { border-left:4px solid #16A34A; opacity:0.85; }
+    .ac-header { display:flex; align-items:center; gap:14px; padding:16px 18px; }
+    .ac-icon { width:44px; height:44px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .ac-title   { font-size:15px; font-weight:800; color:var(--dark); }
+    .ac-subject { font-size:12px; color:var(--gray); margin-top:3px; }
+    .ac-badge   { margin-left:auto; flex-shrink:0; }
+    .ac-body { padding:0 18px 16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .ac-meta-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--gray); }
+    .ac-meta-item svg { width:14px; height:14px; flex-shrink:0; }
+    .ac-actions { margin-left:auto; display:flex; gap:8px; }
+    .ac-btn { padding:7px 14px; border-radius:var(--radius-md); font-size:12px; font-weight:700; cursor:pointer; border:1.5px solid; transition:all 0.2s; }
+    .ac-btn-primary { background:#1E40AF; color:#fff; border-color:#1E40AF; }
+    .ac-btn-primary:hover { background:#1D3588; }
+    .ac-btn-outline { background:#fff; color:#1E40AF; border-color:#1E40AF; }
+    .ac-btn-outline:hover { background:#DBEAFE; }
+    .ac-btn-done { background:#DCFCE7; color:#16A34A; border-color:#16A34A; cursor:default; }
+
+    /* Upload area */
+    .upload-area { border:2px dashed var(--border); border-radius:var(--radius-lg); padding:20px; text-align:center; cursor:pointer; transition:all 0.2s; margin-top:10px; }
+    .upload-area:hover { border-color:#1E40AF; background:#EFF6FF; }
+    .upload-area p { font-size:13px; color:var(--gray); margin-top:6px; }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <a href="dashboard.html" style="display:flex;align-items:center;gap:6px;color:var(--gray);font-size:13px;font-weight:600">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Back
+    </a>
+    <div class="topbar-logo" style="margin-left:8px"><div class="topbar-logo-icon" style="background:#1E40AF">E</div>Assignments</div>
+    <span class="topbar-spacer"></span>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Raju Sharma</div><div class="ud-role">Student · Class 10A</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <!-- Summary -->
+    <div class="stat-row" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:8px;background:#FEF3C7;display:flex;align-items:center;justify-content:center;font-size:16px">📝</div>
+        <div><div style="font-size:20px;font-weight:800;color:#D97706">3</div><div style="font-size:11px;color:var(--gray)">Pending</div></div>
+      </div>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:8px;background:#FEE2E2;display:flex;align-items:center;justify-content:center;font-size:16px">⚠</div>
+        <div><div style="font-size:20px;font-weight:800;color:#DC2626">1</div><div style="font-size:11px;color:var(--gray)">Due Today</div></div>
+      </div>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:8px;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:16px">✅</div>
+        <div><div style="font-size:20px;font-weight:800;color:#16A34A">8</div><div style="font-size:11px;color:var(--gray)">Submitted</div></div>
+      </div>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:8px;background:#DBEAFE;display:flex;align-items:center;justify-content:center;font-size:16px">🏆</div>
+        <div><div style="font-size:20px;font-weight:800;color:#1E40AF">6</div><div style="font-size:11px;color:var(--gray)">Graded</div></div>
+      </div>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="pending">Pending (3)</button>
+      <button class="filter-tab" data-filter="submitted">Submitted (8)</button>
+      <button class="filter-tab" data-filter="graded">Graded (6)</button>
+      <button class="filter-tab" data-filter="all">All</button>
+    </div>
+
+    <!-- Assignment cards -->
+    <div id="assignList"></div>
+
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+    <a href="attendance.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="grades.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item active"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Assignments</a>
+    <a href="library.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Library</a>
+    <a href="fees.html" class="bn-item "><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Fees</a>
+  </nav>
+</div>
+<script>
+const assignments = [
+  { id:1, title:'Maths — Chapter 5 Exercise', subject:'Mathematics', icon:'📐', bg:'#DBEAFE', teacher:'Mr. Rajesh Kumar', due:'Apr 5, 2026', points:20, status:'pending', dueClass:'due-today', badge:'Due Today', badgeClass:'badge-red' },
+  { id:2, title:'Science Lab Report', subject:'Science', icon:'🔬', bg:'#DCFCE7', teacher:'Ms. Priya Sharma', due:'Apr 5, 2026', points:15, status:'pending', dueClass:'due-today', badge:'Due Today', badgeClass:'badge-red' },
+  { id:3, title:'English Essay — 500 words', subject:'English', icon:'📖', bg:'#EDE9FE', teacher:'Mr. Amit Verma', due:'Apr 8, 2026', points:25, status:'pending', dueClass:'', badge:'3 days left', badgeClass:'badge-orange' },
+  { id:4, title:'CS Project — Python Basics', subject:'Computer Science', icon:'💻', bg:'#E0F2FE', teacher:'Mr. Amit Sharma', due:'Apr 10, 2026', points:30, status:'pending', dueClass:'', badge:'5 days left', badgeClass:'badge-blue' },
+  { id:5, title:'Social Studies Map Work', subject:'Social Studies', icon:'🗺', bg:'#FEF3C7', teacher:'Ms. Sunita Nair', due:'Apr 3, 2026', points:10, status:'submitted', dueClass:'submitted', badge:'Submitted', badgeClass:'badge-green' },
+  { id:6, title:'Hindi Poem Recitation', subject:'Hindi', icon:'📜', bg:'#FEE2E2', teacher:'Ms. Kavya Reddy', due:'Apr 2, 2026', points:10, status:'graded', dueClass:'submitted', badge:'Graded: 9/10', badgeClass:'badge-green', score:'9/10' },
+  { id:7, title:'Maths — Chapter 4 Test', subject:'Mathematics', icon:'📐', bg:'#DBEAFE', teacher:'Mr. Rajesh Kumar', due:'Mar 28, 2026', points:50, status:'graded', dueClass:'submitted', badge:'Graded: 46/50', badgeClass:'badge-green', score:'46/50' },
+];
+
+function renderAssignments(filter) {
+  const list = document.getElementById('assignList');
+  const filtered = filter === 'all' ? assignments : assignments.filter(a => a.status === filter);
+  list.innerHTML = filtered.map(a => `
+    <div class="assign-card ${a.dueClass}">
+      <div class="ac-header">
+        <div class="ac-icon" style="background:${a.bg}">${a.icon}</div>
+        <div style="flex:1">
+          <div class="ac-title">${a.title}</div>
+          <div class="ac-subject">${a.subject} · ${a.teacher}</div>
+        </div>
+        <span class="badge ${a.badgeClass} ac-badge">${a.badge}</span>
+      </div>
+      <div class="ac-body">
+        <div class="ac-meta-item"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Due: ${a.due}</div>
+        <div class="ac-meta-item"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${a.points} points</div>
+        ${a.score ? `<div class="ac-meta-item" style="color:#16A34A;font-weight:700">🏆 Score: ${a.score}</div>` : ''}
+        <div class="ac-actions">
+          ${a.status === 'pending' ? `<button class="ac-btn ac-btn-outline">View Details</button><button class="ac-btn ac-btn-primary">Submit →</button>` : ''}
+          ${a.status === 'submitted' ? `<button class="ac-btn ac-btn-done">✓ Submitted</button>` : ''}
+          ${a.status === 'graded' ? `<button class="ac-btn ac-btn-outline">View Feedback</button>` : ''}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+renderAssignments('pending');
+
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderAssignments(tab.dataset.filter);
+  });
+});
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>
+

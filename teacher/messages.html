@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messages — EduManage Teacher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#16A34A; --accent-s:#DCFCE7; --accent-h:#15803D; }
+    .msg-layout { display:grid; grid-template-columns:280px 1fr; gap:16px; height:calc(100vh - 64px - 60px - 48px); }
+    .msg-list { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); overflow-y:auto; }
+    .msg-item { display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.15s; }
+    .msg-item:hover { background:var(--surface); }
+    .msg-item.active { background:var(--accent-s); }
+    .msg-item:last-child { border-bottom:none; }
+    .msg-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; flex-shrink:0; }
+    .msg-name { font-size:13px; font-weight:700; color:var(--dark); }
+    .msg-preview { font-size:11px; color:var(--gray); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
+    .msg-time { font-size:10px; color:var(--light); margin-left:auto; white-space:nowrap; }
+    .msg-unread { width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+    .chat-area { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); display:flex; flex-direction:column; }
+    .chat-header { padding:14px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; }
+    .chat-messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; }
+    .chat-bubble { max-width:70%; padding:10px 14px; border-radius:12px; font-size:13px; line-height:1.6; }
+    .bubble-in  { background:var(--surface); color:var(--dark); border-radius:0 12px 12px 12px; align-self:flex-start; }
+    .bubble-out { background:var(--accent); color:#fff; border-radius:12px 0 12px 12px; align-self:flex-end; }
+    .bubble-time { font-size:10px; color:var(--light); margin-top:4px; }
+    .bubble-time.out { text-align:right; color:rgba(255,255,255,0.7); }
+    .chat-input-area { padding:12px 16px; border-top:1px solid var(--border); display:flex; gap:8px; }
+    .chat-input { flex:1; height:40px; border:1.5px solid var(--border); border-radius:var(--radius-md); padding:0 12px; font-size:13px; font-family:Inter,sans-serif; outline:none; }
+    .chat-input:focus { border-color:var(--accent); }
+    @media(max-width:768px){ .msg-layout { grid-template-columns:1fr; } .msg-list { height:200px; } }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-badge">3</span></button>
+    <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=64&h=64&fit=crop&crop=face" alt="Teacher" class="topbar-avatar" id="portalAvatarBtn" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mr. Rajesh Kumar</div><div class="ud-role">Mathematics Teacher</div></div>
+        <a href="dashboard.html" class="ud-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content" style="padding-bottom:70px">
+    <div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:16px">Messages</div>
+    <div class="msg-layout">
+      <div class="msg-list">
+        <div class="msg-item active">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=40&h=40&fit=crop&crop=face" class="msg-avatar" alt=""/>
+          <div style="flex:1;min-width:0"><div class="msg-name">Mrs. Mehta</div><div class="msg-preview">Raju will be absent tomorrow…</div></div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div class="msg-time">10m</div><div class="msg-unread"></div></div>
+        </div>
+        <div class="msg-item">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=40&h=40&fit=crop&crop=face" class="msg-avatar" alt=""/>
+          <div style="flex:1;min-width:0"><div class="msg-name">Mr. Patel</div><div class="msg-preview">Can we schedule a meeting?</div></div>
+          <div class="msg-time">2h</div>
+        </div>
+        <div class="msg-item">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=40&h=40&fit=crop&crop=face" class="msg-avatar" alt=""/>
+          <div style="flex:1;min-width:0"><div class="msg-name">Dr. Priya Nair</div><div class="msg-preview">Please submit the term report…</div></div>
+          <div class="msg-time">1d</div>
+        </div>
+        <div class="msg-item">
+          <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=40&h=40&fit=crop&crop=face" class="msg-avatar" alt=""/>
+          <div style="flex:1;min-width:0"><div class="msg-name">Mrs. Roy</div><div class="msg-preview">Thank you for the feedback!</div></div>
+          <div class="msg-time">2d</div>
+        </div>
+      </div>
+
+      <div class="chat-area">
+        <div class="chat-header">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=40&h=40&fit=crop&crop=face" style="width:38px;height:38px;border-radius:50%;object-fit:cover" alt=""/>
+          <div><div style="font-size:14px;font-weight:700">Mrs. Mehta</div><div style="font-size:11px;color:var(--gray)">Parent of Raju Sharma · Class 10A</div></div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div>
+            <div class="chat-bubble bubble-in">Good morning Mr. Rajesh. Raju will be absent tomorrow due to a doctor's appointment.</div>
+            <div class="bubble-time">Today, 9:12 AM</div>
+          </div>
+          <div>
+            <div class="chat-bubble bubble-out">Good morning Mrs. Mehta. Thank you for letting me know. I'll mark him absent and share the notes.</div>
+            <div class="bubble-time out">Today, 9:18 AM</div>
+          </div>
+          <div>
+            <div class="chat-bubble bubble-in">Thank you so much! He has a unit test next week, will he be able to catch up?</div>
+            <div class="bubble-time">Today, 9:20 AM</div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input class="chat-input" id="chatInput" placeholder="Type a message…" />
+          <button class="btn btn-primary" id="sendBtn">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Home</a>
+    <a href="classes.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Classes</a>
+    <a href="attendance.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="gradebook.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Assign.</a>
+    <a href="messages.html" class="bn-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages</a>
+  </nav>
+</div>
+<script>
+document.getElementById('sendBtn').addEventListener('click', function(){
+  var input = document.getElementById('chatInput');
+  var text = input.value.trim();
+  if(!text) return;
+  var msgs = document.getElementById('chatMessages');
+  var now = new Date();
+  var time = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  msgs.innerHTML += '<div><div class="chat-bubble bubble-out">'+text+'</div><div class="bubble-time out">Today, '+time+'</div></div>';
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+});
+document.getElementById('chatInput').addEventListener('keydown', function(e){
+  if(e.key==='Enter') document.getElementById('sendBtn').click();
+});
+document.querySelectorAll('.msg-item').forEach(function(item){
+  item.addEventListener('click', function(){
+    document.querySelectorAll('.msg-item').forEach(function(i){i.classList.remove('active');});
+    item.classList.add('active');
+    var dot = item.querySelector('.msg-unread');
+    if(dot) dot.remove();
+  });
+});
+(function(){
+  var btn=document.getElementById('portalAvatarBtn'),dd=document.getElementById('portalUserDropdown');
+  if(!btn||!dd)return;
+  btn.addEventListener('click',function(e){e.stopPropagation();dd.classList.toggle('open');});
+  document.addEventListener('click',function(){dd.classList.remove('open');});
+  var lb=document.getElementById('portalLogoutBtn');
+  if(lb)lb.addEventListener('click',function(e){e.preventDefault();if(confirm('Log out?'))window.location.href='../login.html';});
+})();
+</script>
+</body>
+</html>

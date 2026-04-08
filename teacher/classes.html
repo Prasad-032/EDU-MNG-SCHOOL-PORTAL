@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Classes — EduManage Teacher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#16A34A; --accent-s:#DCFCE7; --accent-h:#15803D; }
+    .class-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; box-shadow:var(--shadow-sm); transition:all 0.2s; }
+    .class-card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+    .cc-banner { height:80px; display:flex; align-items:center; padding:0 20px; gap:14px; }
+    .cc-icon { width:44px; height:44px; border-radius:var(--radius-md); background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:22px; }
+    .cc-title { font-size:17px; font-weight:800; color:#fff; }
+    .cc-sub   { font-size:12px; color:rgba(255,255,255,0.8); margin-top:2px; }
+    .cc-body  { padding:16px 20px; display:flex; flex-direction:column; gap:10px; }
+    .cc-stat-row { display:flex; gap:16px; }
+    .cc-stat { flex:1; text-align:center; background:var(--surface); border-radius:var(--radius-md); padding:10px 6px; }
+    .cc-stat-n { font-size:18px; font-weight:800; color:var(--dark); }
+    .cc-stat-l { font-size:10px; color:var(--gray); margin-top:2px; }
+    .cc-actions { display:flex; gap:8px; }
+    .classes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    @media(max-width:900px){ .classes-grid { grid-template-columns:1fr 1fr; } }
+    @media(max-width:600px){ .classes-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-badge">3</span></button>
+    <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=64&h=64&fit=crop&crop=face" alt="Teacher" class="topbar-avatar" id="portalAvatarBtn" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mr. Rajesh Kumar</div><div class="ud-role">Mathematics Teacher</div></div>
+        <a href="dashboard.html" class="ud-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div><div style="font-size:20px;font-weight:800;color:var(--dark)">My Classes</div><div style="font-size:13px;color:var(--gray);margin-top:2px">Academic Year 2025–26 · 6 classes assigned</div></div>
+    </div>
+
+    <div class="classes-grid">
+      <div class="class-card">
+        <div class="cc-banner" style="background:linear-gradient(135deg,#1E40AF,#0EA5E9)">
+          <div class="cc-icon">📐</div>
+          <div><div class="cc-title">Mathematics</div><div class="cc-sub">Class 10A · Room 301</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-stat-row">
+            <div class="cc-stat"><div class="cc-stat-n">42</div><div class="cc-stat-l">Students</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#16A34A">94%</div><div class="cc-stat-l">Attendance</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#1E40AF">87%</div><div class="cc-stat-l">Avg Score</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--gray)">⏰ Mon, Wed, Fri · 9:00 – 9:45 AM</div>
+          <div class="cc-actions">
+            <a href="attendance.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Mark Attendance</a>
+            <a href="gradebook.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Gradebook</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="class-card">
+        <div class="cc-banner" style="background:linear-gradient(135deg,#16A34A,#0D9488)">
+          <div class="cc-icon">📐</div>
+          <div><div class="cc-title">Mathematics</div><div class="cc-sub">Class 9B · Room 202</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-stat-row">
+            <div class="cc-stat"><div class="cc-stat-n">43</div><div class="cc-stat-l">Students</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#16A34A">91%</div><div class="cc-stat-l">Attendance</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#1E40AF">82%</div><div class="cc-stat-l">Avg Score</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--gray)">⏰ Tue, Thu · 11:00 – 11:45 AM</div>
+          <div class="cc-actions">
+            <a href="attendance.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Mark Attendance</a>
+            <a href="gradebook.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Gradebook</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="class-card">
+        <div class="cc-banner" style="background:linear-gradient(135deg,#7C3AED,#4338CA)">
+          <div class="cc-icon">📐</div>
+          <div><div class="cc-title">Mathematics</div><div class="cc-sub">Class 8A · Room 101</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-stat-row">
+            <div class="cc-stat"><div class="cc-stat-n">41</div><div class="cc-stat-l">Students</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#16A34A">89%</div><div class="cc-stat-l">Attendance</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#1E40AF">79%</div><div class="cc-stat-l">Avg Score</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--gray)">⏰ Mon, Wed · 1:00 – 1:45 PM</div>
+          <div class="cc-actions">
+            <a href="attendance.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Mark Attendance</a>
+            <a href="gradebook.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Gradebook</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="class-card">
+        <div class="cc-banner" style="background:linear-gradient(135deg,#D97706,#B45309)">
+          <div class="cc-icon">📐</div>
+          <div><div class="cc-title">Mathematics</div><div class="cc-sub">Class 7C · Room 105</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-stat-row">
+            <div class="cc-stat"><div class="cc-stat-n">38</div><div class="cc-stat-l">Students</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#16A34A">96%</div><div class="cc-stat-l">Attendance</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#1E40AF">85%</div><div class="cc-stat-l">Avg Score</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--gray)">⏰ Tue, Fri · 10:00 – 10:45 AM</div>
+          <div class="cc-actions">
+            <a href="attendance.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Mark Attendance</a>
+            <a href="gradebook.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Gradebook</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="class-card">
+        <div class="cc-banner" style="background:linear-gradient(135deg,#DC2626,#B91C1C)">
+          <div class="cc-icon">📐</div>
+          <div><div class="cc-title">Mathematics</div><div class="cc-sub">Class 6B · Room 203</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-stat-row">
+            <div class="cc-stat"><div class="cc-stat-n">40</div><div class="cc-stat-l">Students</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#16A34A">93%</div><div class="cc-stat-l">Attendance</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#1E40AF">88%</div><div class="cc-stat-l">Avg Score</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--gray)">⏰ Mon, Thu · 2:00 – 2:45 PM</div>
+          <div class="cc-actions">
+            <a href="attendance.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Mark Attendance</a>
+            <a href="gradebook.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Gradebook</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="class-card">
+        <div class="cc-banner" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">
+          <div class="cc-icon">📐</div>
+          <div><div class="cc-title">Statistics</div><div class="cc-sub">Class 11A · Room 401</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-stat-row">
+            <div class="cc-stat"><div class="cc-stat-n">35</div><div class="cc-stat-l">Students</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#16A34A">90%</div><div class="cc-stat-l">Attendance</div></div>
+            <div class="cc-stat"><div class="cc-stat-n" style="color:#1E40AF">83%</div><div class="cc-stat-l">Avg Score</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--gray)">⏰ Wed, Fri · 3:00 – 3:45 PM</div>
+          <div class="cc-actions">
+            <a href="attendance.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Mark Attendance</a>
+            <a href="gradebook.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Gradebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Home</a>
+    <a href="classes.html" class="bn-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Classes</a>
+    <a href="attendance.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Attendance</a>
+    <a href="gradebook.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Grades</a>
+    <a href="assignments.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Assign.</a>
+    <a href="messages.html" class="bn-item "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages</a>
+  </nav>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('portalAvatarBtn'),dd=document.getElementById('portalUserDropdown');
+  if(!btn||!dd)return;
+  btn.addEventListener('click',function(e){e.stopPropagation();dd.classList.toggle('open');});
+  document.addEventListener('click',function(){dd.classList.remove('open');});
+  var lb=document.getElementById('portalLogoutBtn');
+  if(lb)lb.addEventListener('click',function(e){e.preventDefault();if(confirm('Log out?'))window.location.href='../login.html';});
+})();
+</script>
+</body>
+</html>

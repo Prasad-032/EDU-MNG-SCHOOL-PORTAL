@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bus Tracking — EduManage Parent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css" />
+  <style>
+    :root { --accent:#D97706; --accent-s:#FEF3C7; --accent-h:#B45309; }
+
+    .bus-hero { background:linear-gradient(135deg,#1E40AF,#0EA5E9); border-radius:var(--radius-xl); padding:24px; color:#fff; margin-bottom:16px; }
+    .bus-number { font-size:13px; opacity:0.75; font-weight:600; }
+    .bus-route  { font-size:22px; font-weight:800; margin:4px 0; }
+    .bus-driver { font-size:13px; opacity:0.80; margin-bottom:16px; }
+    .bus-eta-row { display:flex; align-items:center; gap:16px; }
+    .bus-eta-box { background:rgba(255,255,255,0.15); border-radius:var(--radius-lg); padding:12px 16px; text-align:center; flex:1; }
+    .bus-eta-val { font-size:28px; font-weight:800; }
+    .bus-eta-lbl { font-size:11px; opacity:0.70; margin-top:2px; }
+    .bus-map-placeholder { background:rgba(255,255,255,0.12); border-radius:var(--radius-lg); height:180px; margin-top:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:13px; opacity:0.7; gap:8px; }
+
+    .route-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; margin-bottom:16px; }
+    .route-header { padding:14px 18px; border-bottom:1px solid var(--border); font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:space-between; }
+    .route-stops { padding:0; }
+    .route-stop { display:flex; align-items:center; gap:14px; padding:12px 18px; border-bottom:1px solid var(--border); }
+    .route-stop:last-child { border-bottom:none; }
+    .rs-dot-wrap { display:flex; flex-direction:column; align-items:center; gap:0; }
+    .rs-dot { width:14px; height:14px; border-radius:50%; border:3px solid var(--accent); background:#fff; flex-shrink:0; }
+    .rs-line { width:3px; height:28px; background:var(--border); }
+    .rs-info { flex:1; }
+    .rs-name { font-size:14px; font-weight:700; color:var(--dark); }
+    .rs-sub  { font-size:12px; color:var(--gray); }
+    .rs-time { font-size:12px; font-weight:600; color:var(--accent); white-space:nowrap; }
+
+    .contact-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-xl); padding:16px 18px; display:flex; align-items:center; gap:14px; }
+    .cc-avatar { width:48px; height:48px; border-radius:50%; object-fit:cover; }
+    .cc-info { flex:1; }
+    .cc-name { font-size:15px; font-weight:700; }
+    .cc-role { font-size:12px; color:var(--gray); }
+    .cc-call { width:42px; height:42px; background:var(--accent); color:#fff; border:none; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+
+  <header class="topbar">
+    <div class="topbar-logo"><div class="topbar-logo-icon" style="background:#D97706">E</div>EduManage</div>
+    <span class="topbar-spacer"></span>
+    <button class="topbar-icon-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </button>
+        <div class="user-menu-wrap">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=64&h=64&fit=crop&crop=face" alt="User" class="topbar-avatar" id="portalAvatarBtn" style="cursor:pointer" />
+      <div class="user-dropdown" id="portalUserDropdown">
+        <div class="ud-header"><div class="ud-name">Mrs. Mehta</div><div class="ud-role">Parent Portal</div></div>
+        <a href="dashboard.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="ud-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="../login.html" class="ud-item logout" id="portalLogoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="page-content">
+
+    <div class="bus-hero">
+      <div class="bus-number">Route 4B · Bus KA-01-AB-1234</div>
+      <div class="bus-route">Morning Pickup — Raju</div>
+      <div class="bus-driver">Driver: Ramesh Kumar · +91 98765 43210</div>
+      <div class="bus-eta-row">
+        <div class="bus-eta-box">
+          <div class="bus-eta-val">8 min</div>
+          <div class="bus-eta-lbl">ETA at your stop</div>
+        </div>
+        <div class="bus-eta-box">
+          <div class="bus-eta-val">4:05 PM</div>
+          <div class="bus-eta-lbl">Scheduled arrival</div>
+        </div>
+      </div>
+      <div class="bus-map-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Live tracking map — school transport system active
+      </div>
+    </div>
+
+    <!-- Driver contact -->
+    <div class="contact-card">
+      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face" class="cc-avatar" alt="Driver" />
+      <div class="cc-info">
+        <div class="cc-name">Ramesh Kumar</div>
+        <div class="cc-role">Bus Driver · Route 4B</div>
+      </div>
+      <a href="tel:+919876543210" class="cc-call" title="Call driver">📞</a>
+    </div>
+
+    <!-- Route stops -->
+    <div class="route-card" style="margin-top:16px">
+      <div class="route-header">
+        <span>Today's Route — Morning Pickup</span>
+        <span style="font-size:12px;font-weight:600;color:#16A34A">On Time</span>
+      </div>
+      <div class="route-stops">
+        <div class="route-stop">
+          <div class="rs-dot-wrap"><div class="rs-dot" style="background:#4ADE80;border-color:#4ADE80"></div></div>
+          <div class="rs-info"><div class="rs-name">School Gate</div><div class="rs-sub">Starting point</div></div>
+          <div class="rs-time">6:30 AM</div>
+        </div>
+        <div class="route-stop">
+          <div class="rs-dot-wrap"><div class="rs-line"></div><div class="rs-dot"></div></div>
+          <div class="rs-info"><div class="rs-name">MG Road — Stop 1</div><div class="rs-sub">3 students</div></div>
+          <div class="rs-time">6:42 AM</div>
+        </div>
+        <div class="route-stop">
+          <div class="rs-dot-wrap"><div class="rs-line"></div><div class="rs-dot"></div></div>
+          <div class="rs-info"><div class="rs-name">City Hospital — Stop 2</div><div class="rs-sub">2 students</div></div>
+          <div class="rs-time">6:55 AM</div>
+        </div>
+        <div class="route-stop">
+          <div class="rs-dot-wrap"><div class="rs-line"></div><div class="rs-dot" style="background:#FCD34D;border-color:#FCD34D"></div></div>
+          <div class="rs-info"><div class="rs-name">Your Stop — Raju</div><div class="rs-sub" style="color:var(--accent);font-weight:600">Next pickup</div></div>
+          <div class="rs-time" style="color:var(--accent)">~7:05 AM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Safety info -->
+    <div class="card" style="margin-top:16px;padding:16px 18px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">Safety Features</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px">
+          <span style="font-size:18px">🔒</span> GPS tracking enabled
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px">
+          <span style="font-size:18px">🛡️</span> First aid kit on board
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px">
+          <span style="font-size:18px">📞</span> Emergency contact: +91 98765 43210
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
+    <a href="attendance.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Attendance</span></a>
+    <a href="academics.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Grades</span></a>
+    <a href="fees.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>Fees</span><span class="bn-badge">!</span></a>
+    <a href="messages.html" class="bn-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Messages</span></a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById("portalAvatarBtn");
+  var dd  = document.getElementById("portalUserDropdown");
+  if(!btn||!dd) return;
+  btn.addEventListener("click", function(e){ e.stopPropagation(); dd.classList.toggle("open"); });
+  document.addEventListener("click", function(){ dd.classList.remove("open"); });
+  var logoutBtn = document.getElementById("portalLogoutBtn");
+  if(logoutBtn) logoutBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to log out?")) window.location.href="../login.html";
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — EduManage Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+  <style>
+    .settings-layout{display:grid;grid-template-columns:220px 1fr;gap:20px}
+    .settings-nav{background:#fff;border:1px solid var(--border);border-radius:var(--radius-xl);padding:8px;height:fit-content;position:sticky;top:80px}
+    .sn-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-md);font-size:13px;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.18s}
+    .sn-item:hover{background:var(--surface);color:var(--dark)}
+    .sn-item.active{background:var(--blue-s);color:var(--blue);font-weight:700}
+    .settings-panel{display:none;flex-direction:column;gap:20px}
+    .settings-panel.active{display:flex}
+    .settings-section{background:#fff;border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden}
+    .ss-header{padding:16px 20px;border-bottom:1px solid var(--border)}
+    .ss-title{font-size:15px;font-weight:700;color:var(--dark)}
+    .ss-sub{font-size:12px;color:var(--gray);margin-top:2px}
+    .ss-body{padding:20px;display:flex;flex-direction:column;gap:16px}
+    .ss-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+    .ss-row:last-child{border-bottom:none}
+    .ss-row-label{font-size:14px;font-weight:600;color:var(--dark)}
+    .ss-row-sub{font-size:12px;color:var(--gray);margin-top:2px}
+    .toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+    .toggle input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:9999px;cursor:pointer;transition:0.3s}
+    .toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.3s}
+    .toggle input:checked + .toggle-slider{background:var(--blue)}
+    .toggle input:checked + .toggle-slider::before{transform:translateX(20px)}
+    .perm-table{width:100%;border-collapse:collapse}
+    .perm-table th{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;padding:8px 12px;background:var(--surface);border-bottom:1px solid var(--border)}
+    .perm-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px}
+    .perm-table tr:last-child td{border-bottom:none}
+    .perm-check{width:18px;height:18px;accent-color:var(--blue);cursor:pointer}
+    .grade-table{width:100%;border-collapse:collapse}
+    .grade-table th{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;padding:8px 12px;background:var(--surface);border-bottom:1px solid var(--border)}
+    .grade-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
+    .grade-table input{width:100%;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:13px;font-family:'Inter',sans-serif;outline:none}
+    .grade-table input:focus{border-color:var(--blue)}
+    @media(max-width:900px){.settings-layout{grid-template-columns:1fr}.settings-nav{position:static}}
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo"><div class="sb-logo-icon">E</div><span class="sb-logo-text">EduManage</span></div>
+    <nav class="sb-nav">
+      <div class="sb-group-label">Overview</div>
+      <a href="dashboard.html" class="sb-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="sb-item-label">Dashboard</span></a>
+      <div class="sb-group-label">Academics</div>
+      <a href="students.html" class="sb-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="sb-item-label">Students</span></a>
+      <a href="teachers.html" class="sb-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="sb-item-label">Teachers</span></a>
+      <div class="sb-group-label">Finance</div>
+      <a href="fees.html" class="sb-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="sb-item-label">Fee Management</span></a>
+      <div class="sb-group-label">Management</div>
+      <a href="reports.html" class="sb-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="sb-item-label">Reports</span></a>
+      <a href="settings.html" class="sb-item active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="sb-item-label">Settings</span></a>
+    </nav>
+        <button class="sb-logout-btn logout-btn" title="Logout">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Logout</span>
+    </button>
+<div class="sb-user">
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=64&h=64&fit=crop&crop=face" alt="Admin" class="sb-user-avatar" />
+      <div class="sb-user-info"><div class="sb-user-name">Priya Nair</div><div class="sb-user-role">Principal</div></div>
+      <button class="sb-collapse-btn" id="sidebarToggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+    </div>
+  </aside>
+
+  <div class="admin-main" id="adminMain">
+    <header class="topbar">
+      <div><div class="topbar-title">Settings</div><div class="topbar-breadcrumb">Admin / Settings</div></div>
+      <div class="topbar-actions">
+        <button class="topbar-icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="topbar-notif-badge">5</span></button>
+                <div class="user-menu-wrap">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=64&h=64&fit=crop&crop=face" alt="Admin" class="topbar-avatar" />
+          <div class="user-dropdown" id="adminUserDropdown">
+            <div class="ud-header"><div class="ud-name">Priya Nair</div><div class="ud-role">Principal &middot; Admin</div>            <a href="profile.html" class="ud-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              My Profile
+            </a>
+            </div>
+            <a href="settings.html" class="ud-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>
+              Settings
+            </a>
+            <a href="../login.html" class="ud-item logout logout-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Logout
+            </a>
+      <a href="invoices.html" class="sb-item" data-label="Invoices">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="sb-item-label">Invoices</span>
+      </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="settings-layout">
+
+        <!-- Nav -->
+        <div class="settings-nav">
+          <div class="sn-item active" data-panel="school">🏫 School Profile</div>
+          <div class="sn-item" data-panel="academic">📅 Academic Year</div>
+          <div class="sn-item" data-panel="grading">📊 Grading System</div>
+          <div class="sn-item" data-panel="notifications">🔔 Notifications</div>
+          <div class="sn-item" data-panel="roles">🔒 Roles &amp; Permissions</div>
+          <div class="sn-item" data-panel="integrations">🔗 Integrations</div>
+          <div class="sn-item" data-panel="security">🛡 Security</div>
+        </div>
+
+        <div>
+
+          <!-- School Profile -->
+          <div class="settings-panel active" id="panel-school">
+            <div class="settings-section">
+              <div class="ss-header"><div class="ss-title">School Profile</div><div class="ss-sub">Basic information about your institution</div></div>
+              <div class="ss-body">
+                <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">
+                  <div style="width:72px;height:72px;background:var(--blue);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:900">E</div>
+                  <div><button class="btn btn-outline btn-sm">Upload Logo</button><div style="font-size:11px;color:var(--gray);margin-top:4px">PNG or SVG, max 2MB</div></div>
+                </div>
+                <div class="grid-2">
+                  <div class="form-group"><label class="form-label">School Name *</label><input class="form-input" value="EduManage School" /></div>
+                  <div class="form-group"><label class="form-label">School Code</label><input class="form-input" value="EDU-MH-001" /></div>
+                  <div class="form-group"><label class="form-label">Board / Affiliation</label><select class="form-select"><option>CBSE</option><option>ICSE</option><option>State Board</option><option>IB</option></select></div>
+                  <div class="form-group"><label class="form-label">School Type</label><select class="form-select"><option>K-12</option><option>Primary</option><option>High School</option></select></div>
+                  <div class="form-group"><label class="form-label">Phone</label><input class="form-input" value="+91 800 123 4567" /></div>
+                  <div class="form-group"><label class="form-label">Email</label><input class="form-input" value="admin@edumanage.school" /></div>
+                  <div class="form-group" style="grid-column:span 2"><label class="form-label">Address</label><input class="form-input" value="123 School Road, Bandra West, Mumbai 400050" /></div>
+                </div>
+                <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary">Save Changes</button></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academic Year -->
+          <div class="settings-panel" id="panel-academic">
+            <div class="settings-section">
+              <div class="ss-header"><div class="ss-title">Academic Year Configuration</div><div class="ss-sub">Set the current academic year and term dates</div></div>
+              <div class="ss-body">
+                <div class="grid-2">
+                  <div class="form-group"><label class="form-label">Current Academic Year</label><select class="form-select"><option>2025-2026</option><option>2026-2027</option></select></div>
+                  <div class="form-group"><label class="form-label">Year Start Date</label><input class="form-input" type="date" value="2025-06-01" /></div>
+                  <div class="form-group"><label class="form-label">Year End Date</label><input class="form-input" type="date" value="2026-04-30" /></div>
+                  <div class="form-group"><label class="form-label">Working Days / Week</label><select class="form-select"><option>5 days (Mon-Fri)</option><option>6 days (Mon-Sat)</option></select></div>
+                </div>
+                <div style="font-size:14px;font-weight:700;color:var(--dark);margin-top:8px">Term Dates</div>
+                <table style="width:100%;border-collapse:collapse">
+                  <thead><tr>
+                    <th style="text-align:left;padding:8px;font-size:11px;font-weight:700;color:var(--gray);background:var(--surface)">Term</th>
+                    <th style="text-align:left;padding:8px;font-size:11px;font-weight:700;color:var(--gray);background:var(--surface)">Start</th>
+                    <th style="text-align:left;padding:8px;font-size:11px;font-weight:700;color:var(--gray);background:var(--surface)">End</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr><td style="padding:8px;font-size:13px">Term 1</td><td style="padding:8px"><input class="form-input" type="date" value="2025-06-01" style="height:36px" /></td><td style="padding:8px"><input class="form-input" type="date" value="2025-10-31" style="height:36px" /></td></tr>
+                    <tr><td style="padding:8px;font-size:13px">Term 2</td><td style="padding:8px"><input class="form-input" type="date" value="2025-11-01" style="height:36px" /></td><td style="padding:8px"><input class="form-input" type="date" value="2026-04-30" style="height:36px" /></td></tr>
+                  </tbody>
+                </table>
+                <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary">Save</button></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grading -->
+          <div class="settings-panel" id="panel-grading">
+            <div class="settings-section">
+              <div class="ss-header"><div class="ss-title">Grading System</div><div class="ss-sub">Define grade bands and GPA values</div></div>
+              <div class="ss-body">
+                <table class="grade-table">
+                  <thead><tr><th>Grade</th><th>Min %</th><th>Max %</th><th>GPA</th><th>Remark</th></tr></thead>
+                  <tbody>
+                    <tr><td><input value="A+" style="background:#DCFCE7" /></td><td><input type="number" value="90" /></td><td><input type="number" value="100" /></td><td><input type="number" value="4.0" /></td><td><input value="Outstanding" /></td></tr>
+                    <tr><td><input value="A"  style="background:#DCFCE7" /></td><td><input type="number" value="80" /></td><td><input type="number" value="89"  /></td><td><input type="number" value="3.7" /></td><td><input value="Excellent" /></td></tr>
+                    <tr><td><input value="B+" style="background:#DBEAFE" /></td><td><input type="number" value="70" /></td><td><input type="number" value="79"  /></td><td><input type="number" value="3.3" /></td><td><input value="Very Good" /></td></tr>
+                    <tr><td><input value="B"  style="background:#DBEAFE" /></td><td><input type="number" value="60" /></td><td><input type="number" value="69"  /></td><td><input type="number" value="3.0" /></td><td><input value="Good" /></td></tr>
+                    <tr><td><input value="C"  style="background:#FEF3C7" /></td><td><input type="number" value="50" /></td><td><input type="number" value="59"  /></td><td><input type="number" value="2.0" /></td><td><input value="Average" /></td></tr>
+                    <tr><td><input value="D"  style="background:#FEE2E2" /></td><td><input type="number" value="40" /></td><td><input type="number" value="49"  /></td><td><input type="number" value="1.0" /></td><td><input value="Below Average" /></td></tr>
+                    <tr><td><input value="F"  style="background:#FEE2E2" /></td><td><input type="number" value="0"  /></td><td><input type="number" value="39"  /></td><td><input type="number" value="0.0" /></td><td><input value="Fail" /></td></tr>
+                  </tbody>
+                </table>
+                <div style="display:flex;justify-content:flex-end;gap:8px">
+                  <button class="btn btn-outline btn-sm">+ Add Grade</button>
+                  <button class="btn btn-primary">Save Grading</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="settings-panel" id="panel-notifications">
+            <div class="settings-section">
+              <div class="ss-header"><div class="ss-title">Notification Settings</div><div class="ss-sub">Control which alerts are sent and how</div></div>
+              <div id="notif-rows"></div>
+              <div style="padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end">
+                <button class="btn btn-primary">Save Preferences</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Roles & Permissions -->
+          <div class="settings-panel" id="panel-roles">
+            <div class="settings-section">
+              <div class="ss-header"><div class="ss-title">Roles &amp; Permissions</div><div class="ss-sub">Control what each role can access</div></div>
+              <div style="overflow-x:auto">
+                <table class="perm-table">
+                  <thead><tr><th>Permission</th><th>Admin</th><th>Teacher</th><th>Student</th><th>Parent</th></tr></thead>
+                  <tbody id="perm-rows"></tbody>
+                </table>
+              </div>
+              <div style="padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end">
+                <button class="btn btn-primary">Save Permissions</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Integrations -->
+          <div class="settings-panel" id="panel-integrations">
+            <div class="settings-section">
+              <div class="ss-header"><div class="ss-title">Integrations</div><div class="ss-sub">Connect third-party services</div></div>
+              <div id="integrations-rows"></div>
+            </div>
+          </div>
+
+          <!-- Security -->
+          <div class="settings-panel" id="panel-security">
+            <div class="settings-section">
+              <div class="ss-header"><div class="ss-title">Security Settings</div><div class="ss-sub">Protect your school's data</div></div>
+              <div id="security-rows"></div>
+              <div style="padding:16px 20px;border-top:1px solid var(--border)">
+                <div class="form-group">
+                  <label class="form-label">Change Admin Password</label>
+                  <div class="grid-2" style="margin-top:8px">
+                    <input class="form-input" type="password" placeholder="Current password" />
+                    <input class="form-input" type="password" placeholder="New password" />
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:flex-end;margin-top:12px">
+                  <button class="btn btn-primary">Update Password</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="shared.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Panel switching
+  document.querySelectorAll('.sn-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('.sn-item').forEach(function(i) { i.classList.remove('active'); });
+      document.querySelectorAll('.settings-panel').forEach(function(p) { p.classList.remove('active'); });
+      item.classList.add('active');
+      document.getElementById('panel-' + item.dataset.panel).classList.add('active');
+    });
+  });
+
+  // Helper: toggle row
+  function makeToggleRow(title, sub, checked) {
+    var row = document.createElement('div');
+    row.className = 'ss-row';
+    row.style.padding = '14px 20px';
+    var left = document.createElement('div');
+    var label = document.createElement('div');
+    label.className = 'ss-row-label';
+    label.textContent = title;
+    var subEl = document.createElement('div');
+    subEl.className = 'ss-row-sub';
+    subEl.textContent = sub;
+    left.appendChild(label);
+    left.appendChild(subEl);
+    var toggle = document.createElement('label');
+    toggle.className = 'toggle';
+    var inp = document.createElement('input');
+    inp.type = 'checkbox';
+    if (checked) inp.checked = true;
+    var slider = document.createElement('span');
+    slider.className = 'toggle-slider';
+    toggle.appendChild(inp);
+    toggle.appendChild(slider);
+    row.appendChild(left);
+    row.appendChild(toggle);
+    return row;
+  }
+
+  // Notifications
+  var notifs = [
+    ['Attendance Alert to Parents', 'Send SMS/push when student is marked absent', true],
+    ['Fee Due Reminder', 'Remind parents 3 days before fee due date', true],
+    ['Fee Overdue Alert', 'Alert after fee due date passes', true],
+    ['Exam Schedule Notification', 'Notify students and parents of upcoming exams', true],
+    ['Report Card Published', 'Alert when report cards are available', true],
+    ['Low Attendance Warning', 'Alert when attendance drops below 75%', true],
+    ['New Circular / Announcement', 'Push notification for new school circulars', false],
+    ['Bus Arrival Alert', 'Notify parents when bus is 5 mins away', false]
+  ];
+  var notifEl = document.getElementById('notif-rows');
+  notifs.forEach(function(r) { notifEl.appendChild(makeToggleRow(r[0], r[1], r[2])); });
+
+  // Roles & Permissions
+  var perms = [
+    ['View Dashboard',     true,  true,  true,  true ],
+    ['Manage Students',    true,  false, false, false],
+    ['Mark Attendance',    true,  true,  false, false],
+    ['View Attendance',    true,  true,  true,  true ],
+    ['Enter Grades',       true,  true,  false, false],
+    ['View Grades',        true,  true,  true,  true ],
+    ['Manage Fee',         true,  false, false, false],
+    ['Pay Fee',            false, false, true,  true ],
+    ['Send Notifications', true,  true,  false, false],
+    ['View Reports',       true,  true,  false, false],
+    ['Manage Settings',    true,  false, false, false],
+    ['Track Bus',          true,  false, false, true ]
+  ];
+  var tbody = document.getElementById('perm-rows');
+  perms.forEach(function(r) {
+    var tr = document.createElement('tr');
+    var td0 = document.createElement('td');
+    td0.style.fontWeight = '500';
+    td0.textContent = r[0];
+    tr.appendChild(td0);
+    for (var i = 1; i < r.length; i++) {
+      var td = document.createElement('td');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.className = 'perm-check';
+      cb.checked = r[i];
+      td.appendChild(cb);
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  });
+
+  // Integrations
+  var integrations = [
+    ['Google Workspace',  'Single sign-on and calendar sync',    '🔵', true],
+    ['WhatsApp Business', 'Parent notifications via WhatsApp',   '🟢', false],
+    ['Razorpay',          'Online fee payment gateway',          '🔵', true],
+    ['Zoom',              'Parent-teacher video meetings',       '🔵', false],
+    ['Microsoft 365',     'SSO and Teams integration',           '🟦', false],
+    ['Google Classroom',  'LMS integration',                     '🟡', false]
+  ];
+  var integEl = document.getElementById('integrations-rows');
+  integrations.forEach(function(r) {
+    var row = document.createElement('div');
+    row.className = 'ss-row';
+    row.style.padding = '14px 20px';
+
+    var left = document.createElement('div');
+    left.style.cssText = 'display:flex;align-items:center;gap:12px';
+
+    var iconBox = document.createElement('div');
+    iconBox.style.cssText = 'width:40px;height:40px;background:var(--surface);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px';
+    iconBox.textContent = r[2];
+
+    var info = document.createElement('div');
+    var name = document.createElement('div');
+    name.className = 'ss-row-label';
+    name.textContent = r[0];
+    var desc = document.createElement('div');
+    desc.className = 'ss-row-sub';
+    desc.textContent = r[1];
+    info.appendChild(name);
+    info.appendChild(desc);
+
+    left.appendChild(iconBox);
+    left.appendChild(info);
+
+    var btn = document.createElement('button');
+    btn.className = 'btn btn-sm ' + (r[3] ? 'btn-outline' : 'btn-primary');
+    btn.textContent = r[3] ? 'Connected' : 'Connect';
+
+    row.appendChild(left);
+    row.appendChild(btn);
+    integEl.appendChild(row);
+  });
+
+  // Security
+  var security = [
+    ['Two-Factor Authentication', 'Require OTP for admin logins', true],
+    ['Session Timeout', 'Auto logout after 30 minutes of inactivity', true],
+    ['Login Attempt Limit', 'Lock account after 5 failed attempts', true],
+    ['Audit Logs', 'Track all admin actions with timestamps', true],
+    ['Data Export Restriction', 'Only admins can export student data', true]
+  ];
+  var secEl = document.getElementById('security-rows');
+  security.forEach(function(r) { secEl.appendChild(makeToggleRow(r[0], r[1], r[2])); });
+
+});
+</script>
+</body>
+</html>
