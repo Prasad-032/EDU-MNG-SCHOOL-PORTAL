@@ -224,7 +224,7 @@ Install the Live Server extension and click "Go Live".
 ## Author
 
 Developed as part of an internship evaluation task.  
-**Intern:** Prasad  
+**Intern:** KILLAMPUDI DEVIVARAPRASAD  
 **Repository:** [github.com/Prasad-032/EDU-MNG-SCHOOL-PORTAL](https://github.com/Prasad-032/EDU-MNG-SCHOOL-PORTAL)
 
 ---
